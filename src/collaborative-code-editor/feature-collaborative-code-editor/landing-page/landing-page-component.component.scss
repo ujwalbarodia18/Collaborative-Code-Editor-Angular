@@ -1,0 +1,248 @@
+@import '../../common/variables';
+
+:host {
+  display: block;
+  min-height: 100vh;
+  background-color: $bg-dark;
+  color: $text-primary;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.landing-container {
+  display: flex;
+  min-height: 100vh;
+  
+  // Responsive switch to stacked layout on tablets/mobiles
+  @media (max-width: 900px) {
+    flex-direction: column;
+  }
+}
+
+// --- LEFT PANE (Form) ---
+.left-pane {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+
+  .form-wrapper {
+    max-width: 450px;
+    width: 100%;
+
+    header {
+      margin-bottom: 2.5rem;
+      h1 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        line-height: 1.1;
+        background: linear-gradient(90deg, $accent-blue, $accent-green);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .subtitle {
+        color: $text-secondary;
+        font-size: 1.1rem;
+        line-height: 1.5;
+      }
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+      position: relative;
+
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+
+      input {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        background-color: $bg-editor;
+        border: 1px solid $border-color;
+        border-radius: 6px;
+        color: $text-primary;
+        font-size: 1rem;
+        transition: border-color 0.2s;
+
+        &:focus {
+          outline: none;
+          border-color: $accent-blue;
+        }
+
+        &.invalid {
+            border-color: $error-color;
+        }
+      }
+      
+      .error-msg {
+        position: absolute;
+        bottom: -1.2rem;
+        left: 0;
+        color: $error-color;
+        font-size: 0.8rem;
+      }
+    }
+
+    .btn-join {
+      width: 100%;
+      padding: 0.875rem;
+      background: linear-gradient(90deg, $accent-blue, darken($accent-blue, 10%));
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.1s, opacity 0.2s;
+
+      &:hover:not(:disabled) {
+        opacity: 0.9;
+      }
+      &:active:not(:disabled) {
+         transform: scale(0.98);
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        background: $border-color;
+      }
+    }
+  }
+}
+
+// --- RIGHT PANE (Editor Illustration) ---
+.right-pane {
+  flex: 1;
+  background-color: darken($bg-dark, 2%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  perspective: 1000px; // Adds depth for a slight 3D effect if desired
+
+  @media (max-width: 900px) {
+    min-height: 400px; // Ensure visibility on mobile stack
+  }
+
+  .editor-illustration-container {
+    width: 100%;
+    max-width: 600px;
+    height: 400px;
+    background-color: $bg-editor;
+    border-radius: 12px;
+    border: 1px solid $border-color;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative; // For active users overlay
+
+    .editor-header {
+      background-color: darken($bg-editor, 3%);
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid $border-color;
+
+      .window-controls {
+        display: flex;
+        gap: 6px;
+        margin-right: 1rem;
+        .dot {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          &.red { background-color: #ff5f56; }
+          &.yellow { background-color: #ffbd2e; }
+          &.green { background-color: #27c93f; }
+        }
+      }
+      .filename {
+        color: $text-secondary;
+        font-size: 0.9rem;
+        font-family: 'Fira Code', monospace;
+      }
+    }
+
+    .code-area {
+      flex: 1;
+      display: flex;
+      font-family: 'Fira Code', 'Consolas', monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      position: relative;
+
+      .line-numbers {
+        padding: 1rem 0.5rem;
+        text-align: right;
+        color: darken($text-secondary, 20%);
+        border-right: 1px solid lighten($bg-editor, 5%);
+        user-select: none;
+        display: flex;
+        flex-direction: column;
+        span { padding: 0 0.5rem; }
+      }
+
+      .code-content {
+        padding: 1rem;
+        white-space: pre-wrap;
+        color: #e6edf3; // Base code color
+        flex: 1;
+
+        // Simulating Syntax Highlighting colors
+        .code-user-a { color: #ff7b72; } // Reddish for JS keywords (fake)
+        .code-user-b { color: #d2a8ff; } // Purpleish for other parts (fake)
+        
+        .cursor {
+            font-weight: 100;
+            margin-left: -2px;
+            animation: blink 1s step-end infinite;
+
+            &.cursor-a { color: $accent-blue; }
+            &.cursor-b { color: $accent-green; }
+        }
+      }
+
+      // Floating tags showing who is actively typing
+      .active-users-overlay {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+          pointer-events: none;
+
+          .user-tag {
+              font-size: 0.75rem;
+              padding: 4px 8px;
+              border-radius: 12px;
+              font-weight: 600;
+              opacity: 0;
+              transform: translateY(-10px);
+              transition: all 0.3s ease;
+
+              &.typing {
+                  opacity: 0.8;
+                  transform: translateY(0);
+              }
+
+              &.user-a-tag { background-color: rgba($accent-blue, 0.2); color: $accent-blue; }
+              &.user-b-tag { background-color: rgba($accent-green, 0.2); color: $accent-green; }
+          }
+      }
+    }
+  }
+}
+
+// Standard blinking cursor animation
+@keyframes blink {
+  from, to { opacity: 1; }
+  50% { opacity: 0; }
+}
