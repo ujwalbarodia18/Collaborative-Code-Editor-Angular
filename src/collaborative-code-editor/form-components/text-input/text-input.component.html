@@ -1,0 +1,19 @@
+<form-component-wrapper
+  [label]="label"
+  [required]="required"
+>
+  <input
+    ngDefaultControl
+    [value]="value"
+    [disabled]="disabled"
+    [type]="type"
+    [placeholder]="placeholder"
+    (input)="handleInput($any($event.target).value)"
+  />
+
+  @if (showError && this.errorMessage) {
+    <div class="err-message mt-1">
+      <img class="svg" src="assets/error-cross-fill.svg"/> {{ errorMessage }}
+    </div>
+  }
+</form-component-wrapper>

@@ -1,0 +1,27 @@
+@import "../../common/styles/variables.scss";
+
+$input-padding-x: 1rem;
+$input-padding-y: 0.75rem;
+
+input {
+  width: 100%;
+  padding: $input-padding-y $input-padding-x;
+  background-color: $bg-editor;
+  border: 1px solid $border-color;
+  border-radius: 6px;
+  color: $text-primary;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+
+  &:focus {
+    outline: none;
+    border-color: $accent-blue;
+  }
+
+  &.invalid {
+      border-color: $error-color;
+  }
+}
+
+
+

@@ -1,0 +1,12 @@
+@import "../../common/styles/variables.scss";
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.err-color {
+  color: $error-color;
+}

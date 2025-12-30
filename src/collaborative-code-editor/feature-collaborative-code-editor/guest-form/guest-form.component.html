@@ -1,0 +1,63 @@
+@switch (formType) {
+  @case ('join') {
+    <div class="form-title">Join a Room</div>
+    <form [formGroup]="joinForm" class="d-flex flex-column gap-3">
+      <ui-text-input
+        [label]="'Display Name'"
+        [placeholder]="'Enter Name'"
+        formControlName="displayName"
+        [showError]="submitted"
+      ></ui-text-input>
+      <ui-text-input
+        [label]="'Room ID'"
+        placeholder="Enter Room Id"
+        formControlName="roomId"
+        [showError]="submitted"
+      ></ui-text-input>
+      <div class="submit-button-group mt-2">
+        <ui-button
+          [btnType]="'primary'"
+          [label]="'Submit'"
+          (btnClick)="handleJoinRoom()"/>
+        <button class="btn-link" (click)="openHostRoomForm()">Want to create a new room?</button>
+      </div>
+
+    </form>
+  }
+  @case ('host') {
+    <div class="form-title">Create New Room</div>
+    <form [formGroup]="hostForm" class="d-flex flex-column gap-3">
+      <ui-text-input
+        [label]="'Display Name'"
+        [placeholder]="'Enter Name'"
+        formControlName="displayName"
+        [showError]="submitted"
+      ></ui-text-input>
+      <ui-text-input
+        [label]="'Room Name'"
+        placeholder="Untitled"
+        formControlName="roomName"
+        [showError]="submitted"
+      ></ui-text-input>
+      <div class="submit-button-group mt-2">
+        <ui-button
+          [btnType]="'primary'"
+          [label]="'Submit'"
+          (btnClick)="handleHostRoom()"/>
+        <button class="btn-link" (click)="openJoinRoomForm()">Want to join existing room?</button>
+      </div>
+    </form>
+  }
+  @case (undefined) {
+    <div class="d-flex gap-3 flex-column align-items-center">
+      <ui-button
+        [btnType]="'primary'"
+        [label]="'Host a Room'"
+        (btnClick)="openHostRoomForm()"/>
+      <ui-button
+        [btnType]="'primary'"
+        [label]="'Join a Room'"
+        (btnClick)="openJoinRoomForm()"/>
+    </div>
+  }
+}

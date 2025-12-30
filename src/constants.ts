@@ -20,3 +20,11 @@ export const users = [
   { name: "Ravi Shankar", color: "#be123c", userId: "19" },      // Rose
   { name: "Sasha Grey", color: "#1e293b", userId: "20" }         // Charcoal
 ];
+
+export const GUEST_KEY = 'collab-guest-user';
+
+export const roomBaseURL = 'room';
+
+export const roomEndPoints = {
+  createRoom: roomBaseURL + '/createRoom',
+}

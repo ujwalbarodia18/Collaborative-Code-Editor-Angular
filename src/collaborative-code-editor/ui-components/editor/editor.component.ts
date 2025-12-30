@@ -4,6 +4,7 @@ import { WebsocketProvider } from 'y-websocket';
 import * as Y from 'yjs';
 import { MonacoBinding } from 'y-monaco';
 import { users } from '../../../constants';
+import { User } from '../../common/models/user';
 
 @Component({
   selector: 'app-editor-component',
@@ -20,6 +21,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() language = 'javascript';
   @Input() roomId = '';
   @Input() webSocketServer = '';
+  @Input() user?: User;
 
   private editor!: monaco.editor.IStandaloneCodeEditor;
   private ydoc = new Y.Doc();
@@ -29,15 +31,11 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   private pendingRender = false;
 
   private cursorDecorations: string[] = [];
-
-  private user: any;
   userName: string = "";
 
   ngOnInit() {
     if (this.provider) return;
-
-    this.user = this.generateRandomUser();
-    this.userName = this.user.name;
+    this.userName = this.user?.name ?? "";
     this.provider = new WebsocketProvider(
       this.webSocketServer,
       this.roomId,
@@ -107,7 +105,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   private handleBeforeUnload = () => {
     this.provider?.awareness.setLocalState(null);
   };
-  
+
   private scheduleRemoteCursorRender() {
     if (this.isRenderingDecorations) {
       this.pendingRender = true;
@@ -140,8 +138,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.provider.awareness.getStates().forEach((state: any) => {
       if (!state.user || !state.cursor) return;
-      
-      if (state.user.userId === this.user.userId) return;
+
+      if (state.user.userId === this.user?.userId) return;
 
       const { start, end } = state.cursor;
       const color = state.user.color || '#2196f3';
@@ -153,7 +151,6 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       else {
         this.removeCursor(remoteUserId);
       }
-      
       decorations.push({
         range: new monaco.Range(
           start.lineNumber,
@@ -187,7 +184,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     style.id = styleId;
     style.innerHTML = `
       .remote-cursor-${userId} {
-        background-color: ${color}33;
+        background-color: ${color};
+        opacity: 0.5;
         border-left: 1px solid ${color};
         border-right: 1px solid ${color};
       }
@@ -199,10 +197,6 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   private removeCursor(userId: string) {
     const styleId = `cursor-style-${userId}`;
     document.getElementById(styleId)?.remove();
-  }
-
-  private generateRandomUser() {
-    return users[Math.floor(Math.random() * users.length)];
   }
 
   getValue(): string {

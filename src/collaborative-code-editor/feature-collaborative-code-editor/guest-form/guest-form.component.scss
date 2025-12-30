@@ -1,0 +1,15 @@
+@import "../../common/styles/variables.scss";
+
+.form-title {
+  color: #fff;
+  font-size: 1.75rem;
+  margin-bottom: 1.25rem;
+  font-weight: 550;
+}
+
+.submit-button-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}

@@ -1,4 +1,11 @@
-@use "./collaborative-code-editor/common/basics.scss";
+
+@use "./collaborative-code-editor/common/styles/basics.scss";
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+@import "./collaborative-code-editor/common/styles/forms.scss";
+@import "./collaborative-code-editor/common/styles/button.scss";
+@import "./collaborative-code-editor/common/styles/variables.scss";
+@import "./collaborative-code-editor/common/styles/basics.scss";
+@import "./collaborative-code-editor/common/styles/forms.scss";
 
 * {
     padding: 0;

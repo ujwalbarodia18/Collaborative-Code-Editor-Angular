@@ -1,0 +1,51 @@
+@import "./variables.scss";
+$radius: 6px;
+$font-size: 14px;
+$transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+
+.btn-primary {
+  width: 100%;
+  padding: 0.875rem;
+  background: $primary-btn-color;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.1s, opacity 0.2s;
+  color: $text-primary;
+
+  &:hover:not(:disabled) {
+    opacity: 0.9;
+  }
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &.spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid currentColor;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 0.6s linear infinite;
+  }
+}
+
+.btn-link {
+  background: none;
+  border: none;
+  color: $link-btn-font-color;
+}
+
+@keyframes rotation {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

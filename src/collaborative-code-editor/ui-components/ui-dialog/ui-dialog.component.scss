@@ -1,0 +1,41 @@
+@import "../../common/styles/variables.scss";
+
+.backdrop {
+  position: absolute;
+  z-index: 99999999;
+  height: 100svh;
+  width: 100svw;
+  background-color: rgba(100, 100, 100, 0.203);
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .dialog {
+    background-color: $bg-dark;
+    padding: 2rem;
+    border-radius: 1rem;
+    min-width: 280px;
+    min-width: 560px;
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: $text-primary;
+      font-size: 1.5rem;
+      font-weight: 500;
+
+      img {
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+      }
+    }
+
+    .body {
+      padding: 1rem 0;
+    }
+  }
+}

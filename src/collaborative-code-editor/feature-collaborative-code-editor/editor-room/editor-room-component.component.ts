@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EditorComponent } from "../../ui-components/editor/editor.component";
 import { ActivatedRoute, Router } from '@angular/router';
+import { UserService } from '../../data-collaborative-code-editor/services/user.service';
+import { User } from '../../common/models/user';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-editor-room-component',
@@ -11,12 +14,20 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./editor-room-component.component.scss'],
 })
 export class EditorRoomComponentComponent {
-  constructor(private router: ActivatedRoute) {}
+  constructor(
+    private router: ActivatedRoute,
+    private us: UserService
+  ) {}
 
   roomId: string = "";
-  displayName: string = "";
+  user?: User | null;
+  webSocketServer: string = environment.websocketUrl;
 
   ngOnInit() {
+    this.user = this.us.getGuestUser();
+    if (!this.user) {
+
+    }
     this.roomId = this.router.snapshot.paramMap.get('id') ?? "";
   }
 }

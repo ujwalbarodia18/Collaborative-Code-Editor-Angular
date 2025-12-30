@@ -1,18 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
+import { UserService } from '../../data-collaborative-code-editor/services/user.service';
+import { GuestFormComponent } from '../guest-form/guest-form.component';
 
 @Component({
   selector: 'app-landing-page-component',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, GuestFormComponent],
   templateUrl: './landing-page-component.component.html',
   styleUrls: ['./landing-page-component.component.scss'],
 })
 export class LandingPageComponentComponent {
   joinForm!: FormGroup;
-  
+
   codeContentUserA = '';
   codeContentUserB = '';
   isUserATyping = false;
@@ -25,14 +27,18 @@ export class LandingPageComponentComponent {
   // Waiting for peer...`;
 
   private readonly snippetB = `
-  
+
   socket.on('peer-joined', (user) => {
     console.log(user + " connected!");
     initializeEditor();
   });
 }`;
 
-  constructor(private fb: FormBuilder, private router: Router) {}
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private us: UserService
+  ) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -52,10 +58,18 @@ export class LandingPageComponentComponent {
     });
   }
 
+  openGuestForm() {
+
+  }
+
   onSubmit(): void {
+    console.log("Join form", this.joinForm.getRawValue());
+    return;
     if (this.joinForm.valid) {
       const formValue = this.joinForm.getRawValue();
+      const name = formValue.displayName;
       const roomId = formValue.roomId;
+      this.us.createGuestUser(name);
       this.router.navigate(
         [`editor/${roomId}`]
       );
@@ -94,7 +108,7 @@ export class LandingPageComponentComponent {
       if (i < text.length) {
         if (user === 'A') this.codeContentUserA += text.charAt(i);
         else this.codeContentUserB += text.charAt(i);
-        
+
         i++;
         const timeoutId = setTimeout(type, speed + (Math.random() * 50)); // add slight randomness to speed
         this.typingTimeouts.push(timeoutId);

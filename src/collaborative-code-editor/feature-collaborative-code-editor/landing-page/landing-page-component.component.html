@@ -1,23 +1,21 @@
 <div class="landing-container">
-  
+
   <div class="left-pane">
     <div class="form-wrapper">
       <header>
         <h1>Code Together, Instantly.</h1>
         <p class="subtitle">Real-time collaborative code editing made simple. Enter a room ID to jump straight in.</p>
       </header>
+      <app-guest-form></app-guest-form>
+      <!-- <button class="btn-join" (click)="openGuestForm()">Join as Guest</button> -->
+      <!-- <form [formGroup]="joinForm" (ngSubmit)="onSubmit()">
 
-      <form [formGroup]="joinForm" (ngSubmit)="onSubmit()">
-        
         <div class="form-group">
-          <label for="displayName">Display Name</label>
-          <input 
-            type="text" 
-            id="displayName" 
-            formControlName="displayName" 
+          <ui-text-input
+            [label]="'Display Name'"
+            formControlName="displayName"
             placeholder="e.g., AlexDev"
-            [class.invalid]="joinForm.get('displayName')?.invalid && joinForm.get('displayName')?.touched"
-          >
+          />
           <div class="error-msg" *ngIf="joinForm.get('displayName')?.invalid && joinForm.get('displayName')?.touched">
             <small *ngIf="joinForm.get('displayName')?.errors?.['required']">Display name is required.</small>
             <small *ngIf="joinForm.get('displayName')?.errors?.['minlength']">Must be at least 3 characters.</small>
@@ -25,27 +23,25 @@
         </div>
 
         <div class="form-group">
-          <label for="roomId">Room ID</label>
-          <input 
-            type="text" 
-            id="roomId" 
-            formControlName="roomId" 
+          <ui-text-input
+            [label]="'Room ID'"
+            formControlName="roomId"
             placeholder="e.g., project-alpha-123"
-            [class.invalid]="joinForm.get('roomId')?.invalid && joinForm.get('roomId')?.touched"
-          >
+          />
            <div class="error-msg" *ngIf="joinForm.get('roomId')?.invalid && joinForm.get('roomId')?.touched">
             <small *ngIf="joinForm.get('roomId')?.errors?.['required']">Room ID is required.</small>
             <small *ngIf="joinForm.get('roomId')?.errors?.['pattern']">Alphanumeric and hyphens only.</small>
           </div>
         </div>
 
-        <button type="submit" [disabled]="joinForm.invalid" class="btn-join">
+        <button type="submit" class="btn-join">
           Join Session &#8594;
         </button>
 
-    </form>
+      </form> -->
+
     </div>
-    
+
   </div>
 
 
@@ -71,5 +67,7 @@
 
     </div>
   </div>
+
+
 
 </div>

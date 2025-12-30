@@ -1,0 +1,12 @@
+<div>
+  @if (label) {
+    <label >
+      <span>{{label}}</span>
+      @if (required) {
+        &nbsp;<span class="err-color">*</span>
+      }
+    </label>
+  }
+
+  <ng-content></ng-content>
+</div>

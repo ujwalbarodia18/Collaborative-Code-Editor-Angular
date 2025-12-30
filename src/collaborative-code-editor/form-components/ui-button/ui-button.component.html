@@ -1,0 +1,15 @@
+<button
+  [disabled]="disabled || isLoading"
+  [class]="`btn ${btnType}`"
+  [class.is-loading]="isLoading"
+  (click)="onClick()"
+>
+  <div class="content-wrapper">
+    @if (isLoading) {
+      <span class="spinner"></span>
+    }
+    <span class="btn-text">
+      {{ isLoading ? "" : label }}
+    </span>
+  </div>
+</button>

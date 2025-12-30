@@ -1,4 +1,4 @@
-@import '../../common/variables';
+@import '../../common/styles/variables';
 
 :host {
   display: block;
@@ -11,7 +11,7 @@
 .landing-container {
   display: flex;
   min-height: 100vh;
-  
+
   // Responsive switch to stacked layout on tablets/mobiles
   @media (max-width: 900px) {
     flex-direction: column;
@@ -78,7 +78,7 @@
             border-color: $error-color;
         }
       }
-      
+
       .error-msg {
         position: absolute;
         bottom: -1.2rem;
@@ -94,7 +94,6 @@
       background: linear-gradient(90deg, $accent-blue, darken($accent-blue, 10%));
       border: none;
       border-radius: 6px;
-      color: white;
       font-size: 1.1rem;
       font-weight: 700;
       cursor: pointer;
@@ -198,7 +197,7 @@
         // Simulating Syntax Highlighting colors
         .code-user-a { color: #ff7b72; } // Reddish for JS keywords (fake)
         .code-user-b { color: #d2a8ff; } // Purpleish for other parts (fake)
-        
+
         .cursor {
             font-weight: 100;
             margin-left: -2px;

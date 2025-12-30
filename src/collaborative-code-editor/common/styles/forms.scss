@@ -1,0 +1,8 @@
+@import "./variables.scss";
+
+.err-message {
+  color: $error-color;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
