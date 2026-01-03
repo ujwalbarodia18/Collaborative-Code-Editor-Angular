@@ -8,12 +8,13 @@ import { patch } from "@ngxs/store/operators";
 
 export interface RoomStateModel {
   showCreateRoomLoader: boolean;
-  lastGeneratedRoomId?: string;
+  lastGeneratedRoomId: string;
 }
 @State<RoomStateModel>({
   name: 'room',
   defaults: {
     showCreateRoomLoader: false,
+    lastGeneratedRoomId: ''
   }
 })
 @Injectable()
@@ -25,23 +26,45 @@ export class RoomState {
     return state.showCreateRoomLoader;
   }
 
+  @Selector()
+  static getLastGeneratedRoomId(state: RoomStateModel) {
+    return state.lastGeneratedRoomId;
+  }
+
   @Action(RoomActions.CreateRoom)
-  createRoom(ctx: StateContext<RoomStateModel>) {
-    console.log("Create room");
+  createRoom(ctx: StateContext<RoomStateModel>, { roomDetails }: RoomActions.CreateRoom) {
     return withLoading(
       ctx,
-      this.roomService.generateRoom().pipe(
+      this.roomService.generateRoom(roomDetails).pipe(
         tap((d: any) => {
           ctx.setState(
             patch<RoomStateModel>(
               {
-                lastGeneratedRoomId: d?.data?.roomId
+                lastGeneratedRoomId: d?.data?.roomId,
               }
             )
           )
         })
       ),
       'showCreateRoomLoader'
+    )
+  }
+
+  @Action(RoomActions.GetRoomById)
+  getRoomById(ctx: StateContext<RoomStateModel>, {roomId}: RoomActions.GetRoomById) {
+    return this.roomService.getRoomById(roomId).pipe(
+      tap(d => {
+        console.log("D", d);
+      })
+    )
+  }
+
+  @Action(RoomActions.ClearLastGeneratedRoom)
+  getClearLastGeneratedRoom(ctx: StateContext<RoomStateModel>) {
+    ctx.setState(
+      patch<RoomStateModel>({
+        lastGeneratedRoomId: ''
+      })
     )
   }
 }

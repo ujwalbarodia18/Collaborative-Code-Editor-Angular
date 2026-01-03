@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { User } from '../../common/models/user';
-import { GUEST_KEY } from '../../../constants';
+import { commonEndPoints, GUEST_KEY } from '../../../constants';
+import { ApiService } from './api.service';
+import { Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -8,9 +10,26 @@ import { GUEST_KEY } from '../../../constants';
 export class UserService {
 
   activatedUser?: User;
+  user?: User;
+
+  constructor(private api: ApiService) {}
+
+  setUser(): Observable<any> {
+    return this.api.post(commonEndPoints.getUserDetails).
+    pipe(
+      tap(d => {
+        const user = d?.data?.user;
+        if (!user) {
+          return;
+        }
+
+        this.user = user;
+      })
+    );
+  }
 
   getUser() {
-    return this.activatedUser;
+    return this.user;
   }
 
   createGuestUser(name: string) {

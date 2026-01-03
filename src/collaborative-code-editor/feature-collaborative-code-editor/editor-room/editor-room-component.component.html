@@ -1,5 +1,11 @@
-<app-editor-component
-  [webSocketServer]="webSocketServer"
-  [roomId]="roomId"
-  [user]="user ?? undefined"
-/>
+@if (!!editorDetails) {
+  <app-editor-component
+    [webSocketServer]="webSocketServer"
+    [roomId]="roomId"
+    [user]="user ?? undefined"
+  />
+}
+<!-- @else {
+
+} -->
+

@@ -2,7 +2,9 @@
 
 $input-padding-x: 1rem;
 $input-padding-y: 0.75rem;
-
+:host {
+  color: $text-primary;
+}
 input {
   width: 100%;
   padding: $input-padding-y $input-padding-x;

@@ -24,7 +24,22 @@ export const users = [
 export const GUEST_KEY = 'collab-guest-user';
 
 export const roomBaseURL = 'room';
+export const authBaseURL = 'auth';
+export const commonBaseURL = 'common';
 
 export const roomEndPoints = {
   createRoom: roomBaseURL + '/createRoom',
+  isRoomPasswordProtected: roomBaseURL + '/isRoomPasswordProtected',
+  getRoom: roomBaseURL + '/getRoom',
 }
+
+export const authEndPoints = {
+  login: authBaseURL + '/login',
+  register: authBaseURL + '/register'
+}
+
+export const commonEndPoints = {
+  getUserDetails: commonBaseURL + '/getUserDetails'
+}
+
+

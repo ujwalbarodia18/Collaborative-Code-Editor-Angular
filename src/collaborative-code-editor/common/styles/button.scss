@@ -43,6 +43,16 @@ $transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   background: none;
   border: none;
   color: $link-btn-font-color;
+  &:hover:not(:disabled) {
+    opacity: 0.9;
+  }
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 }
 
 @keyframes rotation {

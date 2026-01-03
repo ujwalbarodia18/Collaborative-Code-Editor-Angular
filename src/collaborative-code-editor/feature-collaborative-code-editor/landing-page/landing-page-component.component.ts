@@ -3,12 +3,12 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterOutlet } from '@angular/router';
 import { UserService } from '../../data-collaborative-code-editor/services/user.service';
-import { GuestFormComponent } from '../guest-form/guest-form.component';
+import { RoomFormComponent } from '../guest-form/room-form.component';
 
 @Component({
   selector: 'app-landing-page-component',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, GuestFormComponent],
+  imports: [CommonModule, ReactiveFormsModule, RoomFormComponent],
   templateUrl: './landing-page-component.component.html',
   styleUrls: ['./landing-page-component.component.scss'],
 })
@@ -58,7 +58,7 @@ export class LandingPageComponentComponent {
     });
   }
 
-  openGuestForm() {
+  openRoomForm() {
 
   }
 

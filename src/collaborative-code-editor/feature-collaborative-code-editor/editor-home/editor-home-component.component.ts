@@ -19,7 +19,7 @@ export class EditorHomeComponentComponent {
 
   ngOnInit() {
     if (this.isGuestLogin) {
-      const user = this.us.getGuestUser();
+      const user = this.us.getUser();
       if (user) {
         this.user = user;
       }

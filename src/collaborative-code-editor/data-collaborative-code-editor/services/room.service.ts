@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { roomEndPoints } from '../../../constants';
-import { map } from 'rxjs';
+import { map, Observable, reduce } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -9,12 +9,26 @@ import { map } from 'rxjs';
 export class RoomService {
   constructor(private api: ApiService) {}
 
-  generateRoom() {
-    return this.api.post(roomEndPoints.createRoom).pipe(map((res: any) => {
-      if (res?.data?.roomId) {
-        return res.data.roomId;
-      }
-      return "";
-    }));
+  generateRoom(roomDetails: any) {
+    const { roomName, password } = roomDetails;
+    const payload = {
+      roomName,
+      password
+    }
+    return this.api.post(roomEndPoints.createRoom, payload);
+  }
+
+  isRoomPasswordProtected(roomId: string): Observable<boolean> {
+    const payload = {
+      roomId
+    }
+    return this.api.post(roomEndPoints.isRoomPasswordProtected, payload).pipe(map((d: any) => !!d?.data));
+  }
+
+  getRoomById(roomDetails: any) {
+    const payload = {
+      ...roomDetails
+    }
+    return this.api.post(roomEndPoints.getRoom, payload);
   }
 }
