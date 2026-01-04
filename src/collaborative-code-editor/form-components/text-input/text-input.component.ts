@@ -25,6 +25,7 @@ export class TextInputComponent implements ControlValueAccessor, OnChanges{
   @Input() takeRequiredFromFormControl: boolean = true;
   @Input() required: boolean = false;
   @Input() showError: boolean = false;
+  @Input() showErrorWithoutTouched: boolean = false;
 
   errorMessage: string | null = null;
   value: string = "";
@@ -94,6 +95,7 @@ export class TextInputComponent implements ControlValueAccessor, OnChanges{
     if (errors['maxlength'])
       return `Maximum ${errors['maxlength'].requiredLength} characters allowed.`;
     if (errors['pattern']) return 'Invalid format.';
+    if (errors['confirm_password_mismatch']) return 'Passwords do not match.';
 
     const firstKey = Object.keys(errors)[0];
     return errors[firstKey]?.message ?? 'Invalid value';

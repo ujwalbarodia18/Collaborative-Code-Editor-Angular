@@ -11,7 +11,7 @@
     (input)="handleInput($any($event.target).value)"
   />
 
-  @if (showError && this.errorMessage) {
+  @if (showError && this.errorMessage && (showErrorWithoutTouched || ngControl.control?.touched)) {
     <div class="err-message mt-1">
       <img class="svg" src="assets/error-cross-fill.svg"/> {{ errorMessage }}
     </div>

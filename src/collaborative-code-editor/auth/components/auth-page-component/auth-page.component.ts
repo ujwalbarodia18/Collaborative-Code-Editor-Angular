@@ -1,13 +1,13 @@
 import { Component, DestroyRef } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
-import { LoginForm } from '../login-form-component/login-form.component';
-import { RegisterForm } from '../register-form-component/register-form.component';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TextInputComponent } from "../../../form-components/text-input/text-input.component";
 import { UiButtonComponent } from "../../../form-components/ui-button/ui-button.component";
 import { AuthService } from '../../auth.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { finalize, Observable } from 'rxjs';
+import { CustomValidators } from '../../../common/helpers/validators';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-auth-page',
@@ -19,8 +19,15 @@ export class AuthPage {
   form!: FormGroup;
   mode: 'login' | 'register' = 'login';
   loading: boolean = false;
+  showErrors: boolean = false;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private destroyRef: DestroyRef) {}
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private toast: ToastrService,
+    private destroyRef: DestroyRef
+  ) {}
 
   ngOnInit() {
     if (this.authService.isLoggedIn()) {
@@ -31,65 +38,59 @@ export class AuthPage {
     this.setMode('login');
   }
 
-  handleRegister(): Observable<any> | undefined{
-    if (this.form.invalid) {
-      return undefined;
-    }
-    const formValue = this.form.getRawValue();
-    console.log("Form value", formValue);
-    return this.authService.register(formValue);
-  }
-
-  handleLogin(): Observable<any> | undefined {
-    if (this.form.invalid) {
-      return undefined;
-    }
-    const formValue = this.form.getRawValue();
-
-    return this.authService.login(formValue);
-  }
-
   handleSubmit() {
-    this.loading = true;
-    const redirectionSub = this.mode === 'login' ? this.handleLogin() : this.handleRegister();
-    if (redirectionSub) {
-      redirectionSub
-      .pipe(finalize(() => this.loading = false), takeUntilDestroyed(this.destroyRef))
-      .subscribe(d => {
-        console.log("D", d);
-        this.redirectToLandingPage();
-      })
+    this.form.markAllAsTouched();
+
+    if (this.form.invalid) {
+      this.toast.error('Fix all errors');
+      return;
     }
+    const action$ =
+    this.mode === 'login'
+      ? this.authService.login(this.form.getRawValue())
+      : this.authService.register(this.form.getRawValue());
+
+    this.loading = true;
+    action$.pipe(
+      finalize(() => (this.loading = false)),
+      takeUntilDestroyed(this.destroyRef)
+    )
+    .subscribe(() => this.redirectToLandingPage());
   }
 
   redirectToLandingPage() {
     this.router.navigate(['/']);
   }
 
-  initializeLoginForm() {
+  buildLoginForm() {
     this.form = this.fb.group({
-      email: this.fb.control(''),
-      password: this.fb.control(''),
+      email: this.fb.control('',[Validators.required, Validators.email]),
+      password: this.fb.control('', Validators.required),
     });
   }
 
-  initializeRegisterForm() {
-    this.form = this.fb.group({
-      email: this.fb.control(''),
-      password: this.fb.control(''),
-      name: this.fb.control(''),
-      confirmPassword: this.fb.control('')
-    })
+  buildRegisterForm() {
+    this.form = this.fb.group(
+      {
+        email: this.fb.control('', [Validators.required, Validators.email]),
+        password: this.fb.control('', [Validators.required]),
+        name: this.fb.control('', [Validators.required]),
+        confirmPassword: this.fb.control('', [Validators.required])
+      },
+      {
+        validators: CustomValidators.matchFieldsValidator('password', 'confirmPassword', 'confirm_password_mismatch')
+      }
+    );
   }
 
   setMode(mode: 'login' | 'register') {
     this.mode = mode;
 
     if (this.mode === 'login') {
-      this.initializeLoginForm();
+      this.buildLoginForm();
     }
     else {
-      this.initializeRegisterForm();
+      this.buildRegisterForm();
     }
   }
 }
