@@ -66,7 +66,10 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         value: this.code,
         language: this.language,
         theme: 'vs-dark',
-        automaticLayout: true
+        automaticLayout: true,
+        hover: {
+          enabled: false
+        }
       }
     );
 
@@ -76,7 +79,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         start: selection.getStartPosition(),
         end: selection.getEndPosition()
       })
-    })
+    });
 
     this.editor.onDidFocusEditorText(() => {
       this.provider.awareness.setLocalStateField('focus', true);
@@ -89,7 +92,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     new MonacoBinding(
       yText,
       this.editor.getModel()!,
-      new Set([this.editor])
+      new Set([this.editor]),
     );
   }
 
@@ -146,11 +149,20 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       const remoteUserId = state.user.userId;
 
       if (state.focus) {
-        this.injectCursorStyle(remoteUserId, color);
+        this.injectCursorStyle(state.user, color);
       }
       else {
         this.removeCursor(remoteUserId);
       }
+
+      const visibleRanges = this.editor.getVisibleRanges();
+      const firstVisibleLine = visibleRanges[0]?.startLineNumber ?? 1;
+
+      const labelPositionClass =
+        start.lineNumber <= firstVisibleLine
+          ? 'remote-cursor-label-bottom'
+          : 'remote-cursor-label-top';
+
       decorations.push({
         range: new monaco.Range(
           start.lineNumber,
@@ -160,12 +172,11 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         ),
         options: {
           className: `remote-cursor-${remoteUserId}`,
+          afterContentClassName: `remote-cursor-label-${remoteUserId}
+          ${labelPositionClass}`,
           stickiness:
             monaco.editor.TrackedRangeStickiness
               .NeverGrowsWhenTypingAtEdges,
-          hoverMessage: {
-            value: `${state.user.name}`
-          }
         }
       });
     });
@@ -176,7 +187,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
-  private injectCursorStyle(userId: string, color: string) {
+  private injectCursorStyle(user: User, color: string) {
+    const userId = user.userId;
     const styleId = `cursor-style-${userId}`;
     if (document.getElementById(styleId)) return;
 
@@ -188,6 +200,27 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         opacity: 0.5;
         border-left: 1px solid ${color};
         border-right: 1px solid ${color};
+      }
+
+      .remote-cursor-label-${user.userId}::before {
+        content: '${user.name}';
+        position: absolute;
+        background: ${user.color};
+        color: white;
+        padding: 2px 6px;
+        font-size: 11px;
+        border-radius: 4px;
+        white-space: nowrap;
+        pointer-events: none;
+        z-index: 9;
+      }
+
+      .remote-cursor-label-top::before {
+        transform: translateY(-1.6em);
+      }
+
+      .remote-cursor-label-bottom::before {
+        transform: translateY(1.6em);
       }
     `;
 

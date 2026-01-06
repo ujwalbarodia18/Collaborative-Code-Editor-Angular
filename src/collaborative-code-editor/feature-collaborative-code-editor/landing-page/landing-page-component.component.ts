@@ -63,7 +63,6 @@ export class LandingPageComponentComponent {
   }
 
   onSubmit(): void {
-    console.log("Join form", this.joinForm.getRawValue());
     return;
     if (this.joinForm.valid) {
       const formValue = this.joinForm.getRawValue();

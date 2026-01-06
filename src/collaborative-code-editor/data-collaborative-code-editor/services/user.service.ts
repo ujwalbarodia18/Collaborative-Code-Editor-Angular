@@ -18,11 +18,12 @@ export class UserService {
     return this.api.post(commonEndPoints.getUserDetails).
     pipe(
       tap(d => {
-        const user = d?.data?.user;
+        const user: User = d?.data?.user;
+
         if (!user) {
           return;
         }
-
+        user.color = this.getUserColor(user.userId);
         this.user = user;
       })
     );

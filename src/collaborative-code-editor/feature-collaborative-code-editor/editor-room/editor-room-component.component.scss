@@ -1,0 +1,15 @@
+@import "../../common/styles/variables.scss";
+
+:host {
+  .editor-room {
+    padding: 1rem;
+    height: 100vh;
+    .editor {
+      height: 720px;
+    }
+    .room-title {
+      color: $text-primary;
+      font-size: 3rem;
+    }
+  }
+}

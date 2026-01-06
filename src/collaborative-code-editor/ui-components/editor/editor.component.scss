@@ -1,8 +1,9 @@
 :host {
   display: block;
-}
-
-.editor-container {
-  width: 100vw;
-  height: 500px;
+  padding: 0.5rem;
+  .editor-container {
+    height: 100%;
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
 }
