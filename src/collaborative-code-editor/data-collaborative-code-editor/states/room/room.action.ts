@@ -13,4 +13,9 @@ export namespace RoomActions {
     static readonly type = '[Room] Clear Last Generated Room';
     constructor() {}
   }
+
+  export class FetchRecentlyVisitedRooms {
+    static readonly type = '[Room] Fetch Recently Visited Rooms';
+    constructor(public userId: string) {}
+  }
 }

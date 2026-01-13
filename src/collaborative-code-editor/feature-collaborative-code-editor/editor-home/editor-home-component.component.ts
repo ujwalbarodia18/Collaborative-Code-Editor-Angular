@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterOutlet } from '@angular/router';
 import { UserService } from '../../data-collaborative-code-editor/services/user.service';
 import { User } from '../../common/models/user';
+import { UiSidebarComponent } from "../../ui-components/ui-sidebar/ui-sidebar.component";
 
 @Component({
   selector: 'app-editor-home-component',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, UiSidebarComponent],
   templateUrl: './editor-home-component.component.html',
   styleUrls: ['./editor-home-component.component.scss'],
 })

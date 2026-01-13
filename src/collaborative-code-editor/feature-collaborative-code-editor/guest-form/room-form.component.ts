@@ -1,4 +1,4 @@
-import { Component, DestroyRef } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators, ɵInternalFormsSharedModule } from '@angular/forms';
 import { TextInputComponent } from "../../form-components/text-input/text-input.component";
 import { UiButtonComponent } from '../../form-components/ui-button/ui-button.component';
@@ -18,10 +18,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   styleUrl: './room-form.component.scss',
 })
 export class RoomFormComponent {
+  @Input() formType?: 'join' | 'host';
+  @Output() submitForm = new EventEmitter<void>();
   joinForm!: FormGroup;
   hostForm!: FormGroup;
   roomId!: FormControl;
-  formType?: 'join' | 'host';
   submitted: boolean = false;
 
   showCreateRoomLoader$!: Observable<boolean>;
@@ -72,6 +73,7 @@ export class RoomFormComponent {
 
   navigateToRoom(id: string) {
     if (!id) return;
+    this.submitForm.emit();
     this.router.navigate([`/editor/${id}`]);
   }
 

@@ -8,8 +8,16 @@
     @if (isLoading) {
       <span class="spinner"></span>
     }
-    <span class="btn-text">
-      {{ isLoading ? "" : label }}
+    <span class="btn-text d-flex align-items-center gap-2">
+      @if (customSlot) {
+        <ng-content></ng-content>
+      }
+      @else {
+        @if (leadingIcon) {
+          <img [src]="leadingIcon"/>
+        }
+        {{ isLoading ? "" : label }}
+      }
     </span>
   </div>
 </button>

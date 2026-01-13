@@ -1,11 +1,12 @@
 @import "../../common/styles/variables.scss";
 
 :host {
+  width: 100%;
   .editor-room {
     padding: 1rem;
     height: 100vh;
     .editor {
-      height: 720px;
+      height: 40rem;
     }
     .room-title {
       color: $text-primary;

@@ -3,12 +3,10 @@ import * as monaco from 'monaco-editor';
 import { WebsocketProvider } from 'y-websocket';
 import * as Y from 'yjs';
 import { MonacoBinding } from 'y-monaco';
-import { users } from '../../../constants';
 import { User } from '../../common/models/user';
 
 @Component({
   selector: 'app-editor-component',
-  standalone: true,
   templateUrl: './editor.component.html',
   styleUrl: './editor.component.scss'
 })
@@ -34,6 +32,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   userName: string = "";
 
   ngOnInit() {
+    console.log("Editor init");
     if (this.provider) return;
     this.userName = this.user?.name ?? "";
     this.provider = new WebsocketProvider(
@@ -63,7 +62,6 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     this.editor = monaco.editor.create(
       this.editorContainer.nativeElement,
       {
-        value: this.code,
         language: this.language,
         theme: 'vs-dark',
         automaticLayout: true,

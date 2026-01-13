@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'ui-dialog',
@@ -9,4 +9,9 @@ import { Component, Input } from '@angular/core';
 })
 export class UiDialogComponent {
   @Input() header: string = "Header";
+  @Output() closeDialog = new EventEmitter<void>();
+
+  onClose() {
+    this.closeDialog.emit();
+  }
 }

@@ -31,6 +31,7 @@ export const roomEndPoints = {
   createRoom: roomBaseURL + '/createRoom',
   isRoomPasswordProtected: roomBaseURL + '/isRoomPasswordProtected',
   getRoom: roomBaseURL + '/getRoom',
+  getRecentRooms: roomBaseURL + '/getRecentRooms',
 }
 
 export const authEndPoints = {

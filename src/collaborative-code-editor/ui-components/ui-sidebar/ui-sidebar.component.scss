@@ -1,0 +1,74 @@
+@import "../../common/styles/variables.scss";
+
+$bg-sidebar: #161b22;
+
+.sidebar-container {
+  background-color: rgb(192, 192, 192);
+  width: 16rem;
+  height: 100svh;
+  background-color: $bg-sidebar;
+  padding: 1rem;
+  color: $text-primary;
+
+  .rooms-list-container {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 6rem); // Account for sidebar padding and button
+    overflow: hidden;
+
+    .header {
+      color: $text-secondary;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .rooms-list {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding-right: 4px;
+
+      &::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 3px;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.3);
+        }
+      }
+
+      .room-tile {
+        display: block;
+        font-size: 1rem;
+        padding: 8px 6px;
+        text-decoration: none;
+        color: $text-primary;
+        border-radius: 4px;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        &.active {
+          background-color: rgba(255, 255, 255, 0.15);
+          font-weight: 500;
+          border-left: 2px solid $text-primary;
+        }
+
+        img {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+  }
+}

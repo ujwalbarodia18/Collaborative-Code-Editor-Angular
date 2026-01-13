@@ -40,6 +40,13 @@ $transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-link {
+  width: 100%;
+  padding: 0.875rem;
+  background: $primary-btn-color;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  font-weight: 700;
   background: none;
   border: none;
   color: $link-btn-font-color;
@@ -51,6 +58,27 @@ $transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   }
   &:disabled {
     opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.btn-tertiary {
+  background-color: transparent;
+  color: $text-primary;
+  text-align: start;
+  border-radius: 6px;
+  border: none;
+
+  &:hover:not(:disabled) {
+    opacity: 0.9;
+    background-color: #FFFFFF0F;
+  }
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    opacity: 0.6;
     cursor: not-allowed;
   }
 }

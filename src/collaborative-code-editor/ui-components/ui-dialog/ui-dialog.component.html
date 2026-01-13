@@ -1,12 +1,11 @@
-<div class="backdrop">
-  <div class="dialog">
+<div class="backdrop" (click)="onClose()">
+  <div class="dialog" (click)="$event.stopPropagation()">
     <div class="header">
       <span class="title">{{ header }}</span>
-      <img src="assets/cross-3.svg"/>
+      <img src="assets/cross-3.svg" (click)="onClose()" alt="Close"/>
     </div>
     <div class="body">
       <ng-content></ng-content>
     </div>
-
   </div>
 </div>

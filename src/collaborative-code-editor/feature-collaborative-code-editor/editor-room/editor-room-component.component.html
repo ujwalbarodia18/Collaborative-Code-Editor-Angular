@@ -1,5 +1,26 @@
 <div class="editor-room">
-  @if (!!editorDetails) {
+  @switch (state) {
+    @case ('loading') {
+      <ui-primary-loader/>
+    }
+    @case ('password') {
+      <app-room-password
+        (submit)="onPasswordSubmit($event)"
+      ></app-room-password>
+    }
+    @case ('ready') {
+      @if (!!roomId && !!this.editorDetails) {
+          <h3 class="room-title">{{ editorDetails.name }}</h3>
+          <app-editor-component
+            class="editor"
+            [webSocketServer]="webSocketServer"
+            [roomId]="roomId"
+            [user]="user ?? undefined"
+          />
+      }
+    }
+  }
+  <!-- @if (!!roomId && !!this.editorDetails) {
       <h3 class="room-title">{{ editorDetails.name }}</h3>
       <app-editor-component
         class="editor"
@@ -10,6 +31,6 @@
   }
   @else {
     <ui-primary-loader/>
-  }
+  } -->
 </div>
 

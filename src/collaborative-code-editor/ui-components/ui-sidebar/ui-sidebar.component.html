@@ -1,0 +1,55 @@
+<div class="sidebar-container">
+  <ui-button
+    label="New room"
+    [btnType]="'tertiary'"
+    [leadingIcon]="'assets/plus-file.svg'"
+    (btnClick)="openNewRoomDialog()"
+  />
+
+  <ui-button
+    label="Join room"
+    [btnType]="'tertiary'"
+    [leadingIcon]="'assets/room-join.svg'"
+    (btnClick)="openNewRoomDialog()"
+  />
+
+  <div class="rooms-list-container mt-2">
+    <div class="header">Recently visited</div>
+
+    <div class="rooms-list mt-2">
+      @for (room of (recentlyVisitedRooms$ | async); track $index) {
+        <a
+          [routerLink]="`/editor/${room.roomId}`"
+          routerLinkActive="active"
+          class="room-tile btn-tertiary mb-1 d-flex align-items-center gap-2"
+        >
+          <img class="svg" src="assets/file-code.svg"/>
+          {{ room.name }}
+        </a>
+      }
+
+      <!-- <a href="#" class="room-tile btn-tertiary">
+        Vibe code
+      </a>
+      <a href="#" class="room-tile btn-tertiary">
+        Vibe code
+      </a>
+      <a href="#" class="room-tile btn-tertiary">
+        Vibe code
+      </a>
+      <a href="#" class="room-tile btn-tertiary">
+        Vibe code
+      </a> -->
+      <!-- <li>Hii</li>
+      <li>Hii</li>
+      <li>Hii</li> -->
+    </div>
+  </div>
+
+  @if (showNewRoomDialog) {
+    <ui-dialog header="" (closeDialog)="closeNewRoomDialog()">
+      <app-room-form [formType]="'host'" (submitForm)="closeNewRoomDialog()" />
+    </ui-dialog>
+  }
+</div>
+

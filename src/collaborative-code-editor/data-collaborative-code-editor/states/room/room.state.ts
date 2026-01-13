@@ -9,12 +9,16 @@ import { patch } from "@ngxs/store/operators";
 export interface RoomStateModel {
   showCreateRoomLoader: boolean;
   lastGeneratedRoomId: string;
+  recentlyVisitedRooms: Array<any>;
+  recentlyVisitedRoomLoader: boolean;
 }
 @State<RoomStateModel>({
   name: 'room',
   defaults: {
     showCreateRoomLoader: false,
-    lastGeneratedRoomId: ''
+    lastGeneratedRoomId: '',
+    recentlyVisitedRoomLoader: false,
+    recentlyVisitedRooms: []
   }
 })
 @Injectable()
@@ -24,6 +28,16 @@ export class RoomState {
   @Selector()
   static getShowCreateRoomLoader(state: RoomStateModel) {
     return state.showCreateRoomLoader;
+  }
+
+  @Selector()
+  static getRecentlyVisitedRoomLoader(state: RoomStateModel) {
+    return state.recentlyVisitedRoomLoader;
+  }
+
+  @Selector()
+  static getRecentlyVisitedRooms(state: RoomStateModel) {
+    return state.recentlyVisitedRooms;
   }
 
   @Selector()
@@ -65,6 +79,26 @@ export class RoomState {
       patch<RoomStateModel>({
         lastGeneratedRoomId: ''
       })
+    )
+  }
+
+  @Action(RoomActions.FetchRecentlyVisitedRooms)
+  fetchRecentlyVisitedRooms(ctx: StateContext<RoomStateModel>, { userId }: RoomActions.FetchRecentlyVisitedRooms) {
+    return withLoading(
+      ctx,
+      this.roomService.getRecentlyVisitedRooms(userId).pipe(
+        tap(res => {
+          const { data } = res;
+          if (data) {
+            ctx.setState(
+              patch<RoomStateModel>({
+                recentlyVisitedRooms: data
+              })
+            )
+          }
+        })
+      ),
+      'showCreateRoomLoader'
     )
   }
 }

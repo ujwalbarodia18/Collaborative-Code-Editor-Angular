@@ -7,11 +7,13 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrl: './ui-button.component.scss',
 })
 export class UiButtonComponent {
-  @Input() label: string = 'Submit';
+  @Input() label: string = '';
   @Input() loadingText: string = 'Loading...';
   @Input() isLoading: boolean = false;
   @Input() disabled: boolean = false;
-  @Input() btnType: 'primary' | 'outline' = 'primary';
+  @Input() btnType: 'primary' | 'tertiary' = 'primary';
+  @Input() leadingIcon: string = "";
+  @Input() customSlot: any = "";
 
   @Output() btnClick = new EventEmitter<void>();
 

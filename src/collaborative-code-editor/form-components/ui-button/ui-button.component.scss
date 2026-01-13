@@ -29,6 +29,25 @@
       cursor: not-allowed;
     }
   }
+
+  &.tertiary {
+    background-color: transparent;
+    color: $text-primary;
+    text-align: start;
+
+    &:hover:not(:disabled) {
+      opacity: 0.9;
+      background-color: #FFFFFF0F;
+    }
+    &:active:not(:disabled) {
+      transform: scale(0.98);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
 }
 
 .spinner {
@@ -45,4 +64,9 @@
 @keyframes rotation {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+img {
+  width: 20px;
+  height: 20px;
 }

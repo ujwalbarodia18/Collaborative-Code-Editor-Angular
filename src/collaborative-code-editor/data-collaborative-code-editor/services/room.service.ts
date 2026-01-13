@@ -31,4 +31,8 @@ export class RoomService {
     }
     return this.api.post(roomEndPoints.getRoom, payload);
   }
+
+  getRecentlyVisitedRooms(userId: string) {
+    return this.api.post(roomEndPoints.getRecentRooms, { userId });
+  }
 }
