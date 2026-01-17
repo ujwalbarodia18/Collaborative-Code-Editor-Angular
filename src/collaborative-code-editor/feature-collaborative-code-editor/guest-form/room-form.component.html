@@ -1,65 +1,55 @@
-@switch (formType) {
-  @case ('join') {
-    <div class="form-title">Join a Room</div>
-    <form [formGroup]="joinForm" class="d-flex flex-column gap-3">
-      <ui-dropdown
-        [label]="'Room'"
-        placeholder="Enter or select a room"
-        formControlName="roomId"
-        [options]="recentlyVisitedRooms"
-        [showError]="submitted"
-      ></ui-dropdown>
-      <div class="submit-button-group mt-2">
-        <ui-button
-          [btnType]="'primary'"
-          [label]="'Submit'"
-          (btnClick)="handleJoinRoom()"/>
-        <button class="btn-link" [disabled]="!!(showCreateRoomLoader$ | async)" (click)="openHostRoomForm()">Want to create a new room?</button>
-      </div>
+<div class="room-form-container">
+  @switch (formType) {
+    @case ('join') {
+      <div class="form-title">Join a Room</div>
+      <form [formGroup]="joinForm" class="d-flex flex-column gap-3">
+        <ui-dropdown
+          [label]="'Room'"
+          placeholder="Enter or select a room"
+          formControlName="roomId"
+          [options]="recentlyVisitedRooms"
+          [showError]="submitted"
+        ></ui-dropdown>
+        <div class="submit-button-group mt-2">
+          <ui-button
+            [btnType]="'primary'"
+            [label]="'Submit'"
+            (btnClick)="handleJoinRoom()"/>
+          <button class="btn-link" [disabled]="!!(showCreateRoomLoader$ | async)" (click)="openHostRoomForm()">Want to create a new room?</button>
+        </div>
 
-    </form>
+      </form>
+    }
+    @case ('host') {
+      <div class="form-title">Create New Room</div>
+      <form [formGroup]="hostForm" class="d-flex flex-column gap-3">
+        <!-- <ui-text-input
+          [label]="'Display Name'"
+          [placeholder]="'Enter Name'"
+          formControlName="displayName"
+          [showError]="submitted"
+        ></ui-text-input> -->
+        <ui-text-input
+          [label]="'Room Name'"
+          placeholder="Untitled"
+          formControlName="roomName"
+          [showError]="submitted"
+        ></ui-text-input>
+        <ui-text-input
+          [label]="'Password'"
+          placeholder="Enter Password(Optional)"
+          formControlName="password"
+          [showError]="submitted"
+        ></ui-text-input>
+        <div class="submit-button-group mt-2">
+          <ui-button
+            [btnType]="'primary'"
+            [label]="'Submit'"
+            [isLoading]="!!(showCreateRoomLoader$ | async)"
+            (btnClick)="handleHostRoom()"/>
+          <button class="btn-link" [disabled]="!!(showCreateRoomLoader$ | async)" (click)="openJoinRoomForm()">Want to join existing room?</button>
+        </div>
+      </form>
+    }
   }
-  @case ('host') {
-    <div class="form-title">Create New Room</div>
-    <form [formGroup]="hostForm" class="d-flex flex-column gap-3">
-      <!-- <ui-text-input
-        [label]="'Display Name'"
-        [placeholder]="'Enter Name'"
-        formControlName="displayName"
-        [showError]="submitted"
-      ></ui-text-input> -->
-      <ui-text-input
-        [label]="'Room Name'"
-        placeholder="Untitled"
-        formControlName="roomName"
-        [showError]="submitted"
-      ></ui-text-input>
-      <ui-text-input
-        [label]="'Password'"
-        placeholder="Enter Password(Optional)"
-        formControlName="password"
-        [showError]="submitted"
-      ></ui-text-input>
-      <div class="submit-button-group mt-2">
-        <ui-button
-          [btnType]="'primary'"
-          [label]="'Submit'"
-          [isLoading]="!!(showCreateRoomLoader$ | async)"
-          (btnClick)="handleHostRoom()"/>
-        <button class="btn-link" [disabled]="!!(showCreateRoomLoader$ | async)" (click)="openJoinRoomForm()">Want to join existing room?</button>
-      </div>
-    </form>
-  }
-  @case (undefined) {
-    <div class="d-flex gap-3 flex-column align-items-center">
-      <ui-button
-        [btnType]="'primary'"
-        [label]="'Host a Room'"
-        (btnClick)="openHostRoomForm()"/>
-      <ui-button
-        [btnType]="'primary'"
-        [label]="'Join a Room'"
-        (btnClick)="openJoinRoomForm()"/>
-    </div>
-  }
-}
+</div>

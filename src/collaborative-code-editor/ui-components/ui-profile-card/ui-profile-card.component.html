@@ -1,0 +1,11 @@
+<div class="profile-card-container d-flex align-items-center gap-3">
+  <!-- <div class="avatar">U</div> -->
+
+  <div class="user-info">
+    <div class="display-name">{{user?.name}}</div>
+  </div>
+
+  <button [appTooltip]="'Logout'" class="logout-btn ms-auto d-flex justify-content-center align-items-center" title="Logout" (click)="handleLogout()">
+    <img src="assets/logout.svg" alt="logout" />
+  </button>
+</div>

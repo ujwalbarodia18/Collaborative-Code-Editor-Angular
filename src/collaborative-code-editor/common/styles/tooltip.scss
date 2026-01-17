@@ -1,0 +1,20 @@
+@import "../../common/styles/variables.scss";
+
+.custom-tooltip {
+  position: absolute;
+  background-color: #333;
+  color: $text-primary;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $radius-sm;
+  font-size: 14px;
+  z-index: 10000;
+  pointer-events: none;
+  white-space: nowrap;
+  box-shadow: $shadow-md;
+}
+
+.custom-tooltip::before {
+  content: '';
+  position: absolute;
+  border: 5px solid transparent;
+}

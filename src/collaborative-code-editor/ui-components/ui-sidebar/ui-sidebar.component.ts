@@ -9,10 +9,11 @@ import { AsyncPipe } from '@angular/common';
 import { RouterLink, RouterLinkActive } from "@angular/router";
 import { UiDialogComponent } from '../../ui-components/ui-dialog/ui-dialog.component';
 import { RoomFormComponent } from '../../feature-collaborative-code-editor/guest-form/room-form.component';
+import { UiProfileCardComponent } from '../ui-profile-card/ui-profile-card.component';
 
 @Component({
   selector: 'ui-sidebar',
-  imports: [AsyncPipe, RouterLink, RouterLinkActive, UiDialogComponent, RoomFormComponent],
+  imports: [AsyncPipe, RouterLink, RouterLinkActive, UiDialogComponent, RoomFormComponent, UiProfileCardComponent],
   templateUrl: './ui-sidebar.component.html',
   styleUrl: './ui-sidebar.component.scss',
 })

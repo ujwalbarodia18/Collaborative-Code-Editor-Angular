@@ -1,0 +1,60 @@
+@import "../../common/styles/variables.scss";
+
+:host {
+  width: 100%;
+}
+.profile-card-container {
+  padding: $spacing-md;
+  border-top: 1px solid $border-color;
+  // position: fixed;
+  // bottom: 0;
+  // width: 100%;
+  // left: 0;
+}
+
+
+.profile-card-container {
+  padding: $spacing-md $spacing-lg;
+  background: rgba(255, 255, 255, 0.04);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  transition: background $transition-fast;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.display-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.status {
+  font-size: 0.75rem;
+  color: #3fb950;
+}
+
+.logout-btn {
+  background: transparent;
+  border: none;
+  padding: 8px;
+  border-radius: 100%;
+  cursor: pointer;
+
+  img {
+    width: 16px;
+    height: 16px;
+    opacity: 0.55;
+    transition: opacity $transition-fast, transform $transition-fast;
+  }
+
+  &:hover img {
+    opacity: 1;
+    transform: translateX(2px);
+  }
+
+  &:hover {
+    background: rgba(248, 81, 73, 0.12);
+  }
+}

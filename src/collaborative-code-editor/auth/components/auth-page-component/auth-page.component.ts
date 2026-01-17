@@ -99,6 +99,7 @@ export class AuthComponent {
 
   handleUseEmailButtonClick() {
     this.showAuthForm = true;
+    this.setMode('login')
   }
 
   hideAuthForm() {

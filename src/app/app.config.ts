@@ -18,9 +18,9 @@ export const appConfig: ApplicationConfig = {
     provideToastr({
       timeOut: 5000,
       positionClass: 'toast-top-right',
-      preventDuplicates: true,
       closeButton: true,
       progressBar: true,
+      maxOpened: 5
     }),
     importProvidersFrom(
       NgxsModule.forRoot([ RoomState ])

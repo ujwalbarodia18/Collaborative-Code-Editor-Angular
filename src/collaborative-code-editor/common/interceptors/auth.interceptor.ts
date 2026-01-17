@@ -30,7 +30,6 @@ export const authInterceptor: HttpInterceptorFn = (
     catchError((error: HttpErrorResponse) => {
       if (error.status === 401) {
         auth.logout();
-        router.navigate(['/editor']);
       }
       return throwError(() => ({
         responseError: error?.error,

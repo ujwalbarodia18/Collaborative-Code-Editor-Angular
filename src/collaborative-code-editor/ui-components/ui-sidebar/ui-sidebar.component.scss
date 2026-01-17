@@ -3,11 +3,14 @@
 $bg-sidebar: #0d1117;
 
 .sidebar-container {
+  display: flex;
+  flex-direction: column;
   width: 17rem;
   height: 100vh;
   background-color: $bg-sidebar;
   padding: $spacing-lg;
   padding-right: $spacing-xs;
+  padding-bottom: $spacing-xs;
   color: $text-primary;
   border-right: 1px solid $border-color;
   box-shadow: 2px 0 12px rgba(0, 0, 0, 0.3);
@@ -69,6 +72,7 @@ $bg-sidebar: #0d1117;
         margin-bottom: $spacing-xs;
         border-left: 2px solid transparent;
         position: relative;
+        margin-right: $spacing-sm;
 
         &:hover {
           background-color: rgba(255, 255, 255, 0.06);
@@ -95,5 +99,13 @@ $bg-sidebar: #0d1117;
         }
       }
     }
+
   }
+}
+
+.profile-card {
+  margin-top: auto;
+  margin-left: -$spacing-lg;
+  margin-right: -$spacing-xs;
+  width: 17rem;
 }

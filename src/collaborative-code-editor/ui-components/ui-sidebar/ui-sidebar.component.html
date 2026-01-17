@@ -1,4 +1,4 @@
-<div class="sidebar-container">
+  <div class="sidebar-container">
   <div class="btn-container">
     <button class="room-tile btn-tertiary mb-1 d-flex align-items-center gap-2 w-100 fw-bold" (click)="openNewRoomDialog('host')">
       <img class="svg" src="assets/plus-file.svg"/>
@@ -27,6 +27,9 @@
       }
     </div>
   </div>
+
+  <ui-profile-card class="profile-card"/>
+
 
   @if (showNewRoomDialog && formType) {
     <ui-dialog header="" (closeDialog)="closeNewRoomDialog()">
