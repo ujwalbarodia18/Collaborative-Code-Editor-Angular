@@ -9,18 +9,20 @@ import { finalize, Observable } from 'rxjs';
 import { CustomValidators } from '../../../common/helpers/validators';
 import { ToastrService } from 'ngx-toastr';
 import { GoogleAuthButton } from '../google-auth-button/google-auth-button.component';
+import { UiDialogComponent } from "../../../ui-components/ui-dialog/ui-dialog.component";
 
 @Component({
-  selector: 'app-auth-page',
-  imports: [ReactiveFormsModule, TextInputComponent, UiButtonComponent, GoogleAuthButton],
+  selector: 'app-auth-component',
+  imports: [ReactiveFormsModule, TextInputComponent, UiButtonComponent, GoogleAuthButton, UiDialogComponent],
   templateUrl: './auth-page.component.html',
   styleUrl: './auth-page.component.scss',
 })
-export class AuthPage {
+export class AuthComponent {
   form!: FormGroup;
   mode: 'login' | 'register' = 'login';
   loading: boolean = false;
   showErrors: boolean = false;
+  showAuthForm: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -60,7 +62,7 @@ export class AuthPage {
   }
 
   redirectToLandingPage() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/editor']);
   }
 
   buildLoginForm() {
@@ -93,5 +95,13 @@ export class AuthPage {
     else {
       this.buildRegisterForm();
     }
+  }
+
+  handleUseEmailButtonClick() {
+    this.showAuthForm = true;
+  }
+
+  hideAuthForm() {
+    this.showAuthForm = false;
   }
 }

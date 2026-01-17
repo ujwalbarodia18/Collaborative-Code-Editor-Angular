@@ -5,7 +5,7 @@ import { UiButtonComponent } from "../../form-components/ui-button/ui-button.com
 
 @Component({
   selector: 'app-room-password',
-  imports: [FormsModule, TextInputComponent, UiButtonComponent],
+  imports: [FormsModule, TextInputComponent],
   templateUrl: './room-password-gate.component.html',
   styleUrl: './room-password-gate.component.scss',
 })

@@ -4,11 +4,13 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterOutlet } from '@angular/router';
 import { UserService } from '../../data-collaborative-code-editor/services/user.service';
 import { RoomFormComponent } from '../guest-form/room-form.component';
+import { AuthComponent } from "../../auth/components/auth-page-component/auth-page.component";
+import { UiButtonComponent } from "../../form-components/ui-button/ui-button.component";
 
 @Component({
   selector: 'app-landing-page-component',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RoomFormComponent],
+  imports: [CommonModule, ReactiveFormsModule, RoomFormComponent, AuthComponent, UiButtonComponent],
   templateUrl: './landing-page-component.component.html',
   styleUrls: ['./landing-page-component.component.scss'],
 })
@@ -58,12 +60,7 @@ export class LandingPageComponentComponent {
     });
   }
 
-  openRoomForm() {
-
-  }
-
   onSubmit(): void {
-    return;
     if (this.joinForm.valid) {
       const formValue = this.joinForm.getRawValue();
       const name = formValue.displayName;

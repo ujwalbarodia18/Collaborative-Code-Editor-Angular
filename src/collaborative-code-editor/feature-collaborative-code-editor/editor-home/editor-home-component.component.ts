@@ -25,7 +25,7 @@ export class EditorHomeComponentComponent {
         this.user = user;
       }
       else {
-        this.router.navigate(['/']);
+        this.router.navigate(['/editor']);
       }
     }
   }

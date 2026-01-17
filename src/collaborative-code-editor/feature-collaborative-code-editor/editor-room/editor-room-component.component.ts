@@ -131,7 +131,7 @@ export class EditorRoomComponentComponent {
       },
       error: err => {
         if (err.status === 400) {
-          this.router.navigate(['/']);
+          this.router.navigate(['/editor']);
           return;
         }
         this.state = 'password';

@@ -30,7 +30,7 @@
     border-radius: $radius-xl;
     min-width: 320px;
     max-width: 600px;
-    width: 90%;
+    // width: 90%;
     border: 1px solid $border-color;
     box-shadow: $shadow-xl;
     animation: slideUp $transition-slow;
@@ -60,8 +60,8 @@
       }
 
       img {
-        width: 24px;
-        height: 24px;
+        width: 36px;
+        height: 36px;
         cursor: pointer;
         padding: $spacing-xs;
         border-radius: $radius-sm;

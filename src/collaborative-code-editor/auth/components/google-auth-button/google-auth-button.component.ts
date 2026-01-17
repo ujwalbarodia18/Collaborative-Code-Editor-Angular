@@ -38,7 +38,7 @@ export class GoogleAuthButton {
   }
 
   redirectToLandingPage() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/editor']);
   }
 
   handleGoogleLogin() {

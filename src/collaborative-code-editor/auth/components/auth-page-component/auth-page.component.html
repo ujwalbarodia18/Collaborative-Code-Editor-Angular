@@ -1,54 +1,63 @@
 <div class="auth-container">
-  <form [formGroup]="form" class="auth-form">
-    <h2>{{ mode === 'login' ? 'Login' : 'Register' }}</h2>
-    @if (mode === 'register') {
-      <ui-text-input
-        label="Name"
-        formControlName="name"
-        placeholder="Enter name"
-        [showError]="true"
-      />
-    }
-    <ui-text-input
-      label="Email"
-      formControlName="email"
-      placeholder="Enter email"
-      type="email"
-      [showError]="true"
+  <ui-google-auth-button></ui-google-auth-button>
+  <div class="divider">
+    <span>or</span>
+  </div>
+
+  <ui-button
+    [btnType]="'primary'"
+    label="Use Email"
+    (btnClick)="handleUseEmailButtonClick()"
     />
 
-    <ui-text-input
-      label="Password"
-      formControlName="password"
-      placeholder="Enter Password"
-      type="password"
-      [showError]="true"
-    />
+  @if (showAuthForm) {
+    <ui-dialog (closeDialog)="hideAuthForm()">
+      <form [formGroup]="form" class="auth-form">
+        <h2>{{ mode === 'login' ? 'Login' : 'Register' }}</h2>
+        @if (mode === 'register') {
+          <ui-text-input
+            label="Name"
+            formControlName="name"
+            placeholder="Enter name"
+            [showError]="true"
+          />
+        }
+        <ui-text-input
+          label="Email"
+          formControlName="email"
+          placeholder="Enter email"
+          type="email"
+          [showError]="true"
+        />
 
-    @if (mode === 'register') {
-      <ui-text-input
-        formControlName="confirmPassword"
-        placeholder="Confirm Password"
-        [label]="'Confirm Password'"
-        [showError]="true"
-        [showErrorWithoutTouched]="true"
-      />
-    }
+        <ui-text-input
+          label="Password"
+          formControlName="password"
+          placeholder="Enter Password"
+          type="password"
+          [showError]="true"
+        />
 
+        @if (mode === 'register') {
+          <ui-text-input
+            formControlName="confirmPassword"
+            placeholder="Confirm Password"
+            [label]="'Confirm Password'"
+            [showError]="true"
+            [showErrorWithoutTouched]="true"
+          />
+        }
 
-    <ui-button
-      [label]="mode === 'login' ? 'Login' : 'Create Account'"
-      [isLoading]="loading"
-      (btnClick)="handleSubmit()"
-    />
+        <ui-button
+          [label]="mode === 'login' ? 'Login' : 'Create Account'"
+          [isLoading]="loading"
+          (btnClick)="handleSubmit()"
+        />
 
-    <div class="divider">
-      <span>or</span>
-    </div>
-
-    <ui-google-auth-button></ui-google-auth-button>
-    <button class="btn-link" (click)="setMode(mode === 'login' ? 'register' : 'login')">
-      {{mode === 'login' ? 'Want to create new account?' : 'Already have an account?'}}
-    </button>
-  </form>
+        <button class="btn-link" (click)="setMode(mode === 'login' ? 'register' : 'login')">
+          {{mode === 'login' ? 'Want to create new account?' : 'Already have an account?'}}
+        </button>
+      </form>
+    </ui-dialog>
+  }
 </div>

@@ -2,7 +2,6 @@
 
 :host {
   display: block;
-  height: 100vh;
   background-color: $bg-dark;
   display: flex;
   justify-content: center;
@@ -14,33 +13,7 @@
     width: 100%;
     max-width: 480px;
 
-    .auth-form {
-      background-color: $bg-card;
-      border: 1px solid $border-color;
-      border-radius: $radius-xl;
-      padding: $spacing-2xl;
-      box-shadow: $shadow-xl;
-      animation: fadeInUp 0.4s ease-out;
-
-      @keyframes fadeInUp {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      h2 {
-        margin: 0 auto $spacing-xl auto;
-        font-size: 1.75rem;
-        font-weight: 700;
-        text-align: center;
-      }
-
-      .divider {
+    .divider {
         display: flex;
         align-items: center;
         text-align: center;
@@ -60,11 +33,30 @@
         }
       }
 
+    .auth-form {
+      width: 380px;
 
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      h2 {
+        margin: 0 auto $spacing-xl auto;
+        font-size: 1.75rem;
+        font-weight: 700;
+        text-align: center;
+      }
 
       display: flex;
       flex-direction: column;
-      gap: $spacing-lg;
+      gap: $spacing-md;
     }
   }
 }

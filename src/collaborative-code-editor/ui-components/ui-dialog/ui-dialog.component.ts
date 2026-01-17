@@ -8,7 +8,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   standalone: true
 })
 export class UiDialogComponent {
-  @Input() header: string = "Header";
+  @Input() header: string = "";
   @Output() closeDialog = new EventEmitter<void>();
 
   onClose() {

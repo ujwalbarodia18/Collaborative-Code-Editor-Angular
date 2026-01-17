@@ -55,6 +55,6 @@ export class AuthService {
     const google = (window as any).google;
     google?.accounts?.id?.disableAutoSelect?.();
     localStorage.removeItem(this.TOKEN_KEY);
-    this.router.navigate(['/auth']);
+    this.router.navigate(['/editor']);
   }
 }
