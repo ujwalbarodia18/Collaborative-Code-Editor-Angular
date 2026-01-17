@@ -26,6 +26,12 @@ export class AuthService {
     );
   }
 
+  loginWithGoogle(googleId: string) {
+    return this.api.post(authEndPoints.googleLogin, { idToken: googleId }).pipe(
+      tap(res => this.handleAuthSuccess(res))
+    );
+  }
+
   handleAuthSuccess(res: any) {
     const token = res?.data?.token;
     if (!token) return;
@@ -46,6 +52,8 @@ export class AuthService {
   }
 
   logout() {
+    const google = (window as any).google;
+    google?.accounts?.id?.disableAutoSelect?.();
     localStorage.removeItem(this.TOKEN_KEY);
     this.router.navigate(['/auth']);
   }

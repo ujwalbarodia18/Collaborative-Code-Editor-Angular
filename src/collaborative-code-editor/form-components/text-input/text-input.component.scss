@@ -1,27 +1,56 @@
 @import "../../common/styles/variables.scss";
 
-$input-padding-x: 1rem;
-$input-padding-y: 0.75rem;
 :host {
   color: $text-primary;
+  display: block;
 }
+
 input {
   width: 100%;
-  padding: $input-padding-y $input-padding-x;
+  padding: $spacing-md $spacing-lg;
   background-color: $bg-editor;
-  border: 1px solid $border-color;
-  border-radius: 6px;
+  border: 2px solid $border-color;
+  border-radius: $radius-md;
   color: $text-primary;
   font-size: 1rem;
-  transition: border-color 0.2s;
+  transition: all $transition-base;
+  box-shadow: 0 0 0 0 rgba(88, 166, 255, 0);
+
+  &::placeholder {
+    color: $text-muted;
+    transition: color $transition-fast;
+  }
+
+  &:hover:not(:disabled) {
+    border-color: $border-color-hover;
+    background-color: lighten($bg-editor, 2%);
+  }
 
   &:focus {
     outline: none;
     border-color: $accent-blue;
+    background-color: lighten($bg-editor, 3%);
+    box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.1);
+
+    &::placeholder {
+      color: $text-secondary;
+    }
   }
 
   &.invalid {
+    border-color: $error-color;
+    box-shadow: 0 0 0 3px rgba(248, 81, 73, 0.1);
+
+    &:focus {
       border-color: $error-color;
+      box-shadow: 0 0 0 3px rgba(248, 81, 73, 0.15);
+    }
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: darken($bg-editor, 2%);
   }
 }
 

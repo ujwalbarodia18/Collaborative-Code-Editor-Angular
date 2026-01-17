@@ -42,6 +42,11 @@
       (btnClick)="handleSubmit()"
     />
 
+    <div class="divider">
+      <span>or</span>
+    </div>
+
+    <ui-google-auth-button></ui-google-auth-button>
     <button class="btn-link" (click)="setMode(mode === 'login' ? 'register' : 'login')">
       {{mode === 'login' ? 'Want to create new account?' : 'Already have an account?'}}
     </button>

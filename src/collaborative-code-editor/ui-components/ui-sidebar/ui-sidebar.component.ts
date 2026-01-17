@@ -12,13 +12,14 @@ import { RoomFormComponent } from '../../feature-collaborative-code-editor/guest
 
 @Component({
   selector: 'ui-sidebar',
-  imports: [UiButtonComponent, AsyncPipe, RouterLink, RouterLinkActive, UiDialogComponent, RoomFormComponent],
+  imports: [AsyncPipe, RouterLink, RouterLinkActive, UiDialogComponent, RoomFormComponent],
   templateUrl: './ui-sidebar.component.html',
   styleUrl: './ui-sidebar.component.scss',
 })
 export class UiSidebarComponent {
   recentlyVisitedRooms$!: Observable<any[]>;
   showNewRoomDialog: boolean = false;
+  formType?: 'join' | 'host';
 
   constructor(private store: Store, private us: UserService) {}
 
@@ -30,11 +31,13 @@ export class UiSidebarComponent {
     this.recentlyVisitedRooms$ = this.store.select(RoomState.getRecentlyVisitedRooms);
   }
 
-  openNewRoomDialog() {
+  openNewRoomDialog(type: 'join' | 'host') {
     this.showNewRoomDialog = true;
+    this.formType = type;
   }
 
   closeNewRoomDialog() {
     this.showNewRoomDialog = false;
+    this.formType = undefined;
   }
 }

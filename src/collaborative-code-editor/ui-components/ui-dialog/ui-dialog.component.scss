@@ -1,23 +1,50 @@
 @import "../../common/styles/variables.scss";
 
 .backdrop {
-  position: absolute;
+  position: fixed;
   z-index: 99999999;
-  height: 100svh;
-  width: 100svw;
-  background-color: rgba(100, 100, 100, 0.203);
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   top: 0;
   left: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  animation: fadeIn $transition-base;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 
   .dialog {
-    background-color: $bg-dark;
-    padding: 2rem;
-    border-radius: 1rem;
-    min-width: 280px;
-    min-width: 560px;
+    background-color: $bg-card;
+    padding: $spacing-xl;
+    border-radius: $radius-xl;
+    min-width: 320px;
+    max-width: 600px;
+    width: 90%;
+    border: 1px solid $border-color;
+    box-shadow: $shadow-xl;
+    animation: slideUp $transition-slow;
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
 
     .header {
       display: flex;
@@ -25,17 +52,37 @@
       justify-content: space-between;
       color: $text-primary;
       font-size: 1.5rem;
-      font-weight: 500;
+      font-weight: 600;
+      margin-bottom: $spacing-lg;
+
+      .title {
+        flex: 1;
+      }
 
       img {
         width: 24px;
         height: 24px;
         cursor: pointer;
+        padding: $spacing-xs;
+        border-radius: $radius-sm;
+        transition: all $transition-fast;
+        opacity: 0.7;
+
+        &:hover {
+          opacity: 1;
+          background-color: rgba(255, 255, 255, 0.1);
+          transform: rotate(90deg);
+        }
+
+        &:active {
+          transform: rotate(90deg) scale(0.9);
+        }
       }
     }
 
     .body {
-      padding: 1rem 0;
+      padding: 0;
+      color: $text-primary;
     }
   }
 }

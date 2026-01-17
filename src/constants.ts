@@ -36,7 +36,8 @@ export const roomEndPoints = {
 
 export const authEndPoints = {
   login: authBaseURL + '/login',
-  register: authBaseURL + '/register'
+  register: authBaseURL + '/register',
+  googleLogin: authBaseURL + '/google',
 }
 
 export const commonEndPoints = {

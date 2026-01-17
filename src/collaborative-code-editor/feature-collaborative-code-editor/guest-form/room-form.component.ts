@@ -10,10 +10,13 @@ import { filter, Observable, take } from 'rxjs';
 import { RoomState } from '../../data-collaborative-code-editor/states/room/room.state';
 import { AsyncPipe } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { DropdownComponent } from '../../form-components/dropdown/dropdown.component';
+import { ToasterService } from '../../common/services/toast.service';
+import { RoomService } from '../../data-collaborative-code-editor/services/room.service';
 
 @Component({
   selector: 'app-room-form',
-  imports: [TextInputComponent, ɵInternalFormsSharedModule, ReactiveFormsModule, UiButtonComponent, AsyncPipe],
+  imports: [TextInputComponent, ɵInternalFormsSharedModule, ReactiveFormsModule, UiButtonComponent, AsyncPipe, DropdownComponent],
   templateUrl: './room-form.component.html',
   styleUrl: './room-form.component.scss',
 })
@@ -27,12 +30,13 @@ export class RoomFormComponent {
 
   showCreateRoomLoader$!: Observable<boolean>;
   lastGeneratedRoomId$!: Observable<string>;
-
-  constructor(private fb: FormBuilder, private store: Store, private router: Router, private us: UserService, private destroyRef: DestroyRef) {}
+  recentlyVisitedRooms: any[] = [];
+  recentlyVisitedRooms$!: Observable<any[]>;
+  constructor(private fb: FormBuilder, private store: Store, private router: Router, private us: UserService, private destroyRef: DestroyRef, private toast: ToasterService, private roomService: RoomService) {}
 
   ngOnInit() {
     this.joinForm = this.fb.group({
-      roomId: this.fb.control('', Validators.required)
+      roomId: this.fb.control('')
     });
 
     this.hostForm = this.fb.group({
@@ -45,6 +49,7 @@ export class RoomFormComponent {
   }
 
   setStateSelection() {
+    this.recentlyVisitedRooms$ = this.store.select(RoomState.getRecentlyVisitedRooms);
     this.showCreateRoomLoader$ = this.store.select(RoomState.getShowCreateRoomLoader);
     this.lastGeneratedRoomId$ = this.store.select(RoomState.getLastGeneratedRoomId);
   }
@@ -55,6 +60,12 @@ export class RoomFormComponent {
     .subscribe(roomId => {
       this.navigateToRoom(roomId);
     })
+
+    this.recentlyVisitedRooms$
+    .pipe(takeUntilDestroyed(this.destroyRef))
+    .subscribe(rooms => {
+      this.recentlyVisitedRooms = rooms.map((room: any) => ({ label: room.name, value: room.roomId }));
+    });
   }
 
   createUser(name: string) {
@@ -64,6 +75,10 @@ export class RoomFormComponent {
   openJoinRoomForm() {
     this.submitted = false;
     this.formType = 'join';
+    const user = this.us.getUser();
+    if (user?.userId) {
+      this.store.dispatch(new RoomActions.FetchRecentlyVisitedRooms(user?.userId));
+    }
   }
 
   openHostRoomForm() {
@@ -98,9 +113,13 @@ export class RoomFormComponent {
       this.joinForm.markAllAsTouched();
       return;
     }
+    if (!this.joinForm.value.roomId && !this.joinForm.value.recentlyVisitedRooms) {
+      this.joinForm.markAllAsTouched();
+      this.toast.error('Please select a room or enter a room ID');
+      return;
+    }
     const joinFormValue = this.joinForm.getRawValue();
     const roomId = joinFormValue.roomId;
-    // this.createUser(joinFormValue.displayName);
     this.navigateToRoom(roomId);
   }
 }

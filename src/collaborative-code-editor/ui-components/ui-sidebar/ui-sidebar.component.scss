@@ -1,35 +1,46 @@
 @import "../../common/styles/variables.scss";
 
-$bg-sidebar: #161b22;
+$bg-sidebar: #0d1117;
 
 .sidebar-container {
-  background-color: rgb(192, 192, 192);
-  width: 16rem;
-  height: 100svh;
+  width: 17rem;
+  height: 100vh;
   background-color: $bg-sidebar;
-  padding: 1rem;
+  padding: $spacing-lg;
+  padding-right: $spacing-xs;
   color: $text-primary;
+  border-right: 1px solid $border-color;
+  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.3);
 
+  .btn-container {
+    height: 6rem;
+  }
   .rooms-list-container {
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 6rem); // Account for sidebar padding and button
+    height: -webkit-fill-available;
     overflow: hidden;
+    margin-top: $spacing-lg;
+    height: calc(100vh - 6rem - 2*$spacing-lg);
 
     .header {
       color: $text-secondary;
-      font-size: 1.1rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
       flex-shrink: 0;
+      margin-bottom: $spacing-sm;
     }
 
     .rooms-list {
       flex: 1;
       overflow-y: auto;
       overflow-x: hidden;
-      padding-right: 4px;
+      padding-right: $spacing-xs;
 
       &::-webkit-scrollbar {
-        width: 6px;
+        width: 4px;
       }
 
       &::-webkit-scrollbar-track {
@@ -37,36 +48,50 @@ $bg-sidebar: #161b22;
       }
 
       &::-webkit-scrollbar-thumb {
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 3px;
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: $radius-sm;
 
         &:hover {
-          background: rgba(255, 255, 255, 0.3);
+          background: rgba(255, 255, 255, 0.25);
         }
       }
 
       .room-tile {
-        display: block;
-        font-size: 1rem;
-        padding: 8px 6px;
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm;
+        font-size: 0.95rem;
+        padding: $spacing-sm $spacing-md;
         text-decoration: none;
         color: $text-primary;
-        border-radius: 4px;
-        transition: background-color 0.2s ease;
+        border-radius: $radius-md;
+        transition: all $transition-fast;
+        margin-bottom: $spacing-xs;
+        border-left: 2px solid transparent;
+        position: relative;
 
         &:hover {
-          background-color: rgba(255, 255, 255, 0.1);
+          background-color: rgba(255, 255, 255, 0.06);
+          transform: translateX(2px);
+          border-left-color: rgba(255, 255, 255, 0.2);
         }
 
         &.active {
-          background-color: rgba(255, 255, 255, 0.15);
+          background-color: rgba(88, 166, 255, 0.12);
           font-weight: 500;
-          border-left: 2px solid $text-primary;
+          border-left-color: $accent-blue;
+          color: $accent-blue-hover;
+
+          img {
+            filter: brightness(1.2);
+          }
         }
 
         img {
-          width: 20px;
-          height: 20px;
+          width: 18px;
+          height: 18px;
+          opacity: 0.8;
+          transition: all $transition-fast;
         }
       }
     }

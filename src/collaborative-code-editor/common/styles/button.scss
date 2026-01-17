@@ -1,61 +1,71 @@
 @import "./variables.scss";
-$radius: 6px;
-$font-size: 14px;
-$transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 
 .btn-primary {
   width: 100%;
-  padding: 0.875rem;
+  padding: $spacing-md $spacing-lg;
   background: $primary-btn-color;
   border: none;
-  border-radius: 6px;
-  font-size: 1.1rem;
-  font-weight: 700;
+  border-radius: $radius-md;
+  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: transform 0.1s, opacity 0.2s;
-  color: $text-primary;
+  transition: all $transition-base;
+  color: white;
+  box-shadow: $shadow-sm;
+  position: relative;
+  overflow: hidden;
 
   &:hover:not(:disabled) {
-    opacity: 0.9;
+    background: $primary-btn-hover;
+    box-shadow: $shadow-md;
+    transform: translateY(-1px);
   }
+
   &:active:not(:disabled) {
-    transform: scale(0.98);
+    transform: translateY(0) scale(0.98);
+    box-shadow: $shadow-sm;
   }
 
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+    background: lighten($bg-editor, 10%);
+    color: $text-muted;
+    box-shadow: none;
   }
 
   &.spinner {
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
     border: 2px solid currentColor;
     border-bottom-color: transparent;
     border-radius: 50%;
     display: inline-block;
     box-sizing: border-box;
-    animation: rotation 0.6s linear infinite;
+    animation: rotation 0.8s linear infinite;
   }
 }
 
 .btn-link {
   width: 100%;
-  padding: 0.875rem;
-  background: $primary-btn-color;
-  border: none;
-  border-radius: 6px;
-  font-size: 1.1rem;
-  font-weight: 700;
+  padding: $spacing-md;
   background: none;
   border: none;
+  font-size: 0.95rem;
+  font-weight: 500;
   color: $link-btn-font-color;
+  cursor: pointer;
+  transition: all $transition-fast;
+
   &:hover:not(:disabled) {
-    opacity: 0.9;
+    color: $accent-blue-hover;
+    text-decoration: underline;
   }
+
   &:active:not(:disabled) {
     transform: scale(0.98);
   }
+
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
@@ -66,19 +76,23 @@ $transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   background-color: transparent;
   color: $text-primary;
   text-align: start;
-  border-radius: 6px;
+  border-radius: $radius-md;
   border: none;
+  padding: $spacing-sm $spacing-md;
+  transition: all $transition-fast;
+  cursor: pointer;
 
   &:hover:not(:disabled) {
-    opacity: 0.9;
-    background-color: #FFFFFF0F;
+    background-color: rgba(255, 255, 255, 0.06);
   }
+
   &:active:not(:disabled) {
     transform: scale(0.98);
+    background-color: rgba(255, 255, 255, 0.1);
   }
 
   &:disabled {
-    opacity: 0.6;
+    opacity: 0.5;
     cursor: not-allowed;
   }
 }

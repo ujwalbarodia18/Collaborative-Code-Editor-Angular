@@ -1,68 +1,91 @@
 @import "../../common/styles/variables.scss";
 
-$accent-white: #fafafa;
-$accent-muted: #30363d;
-
 .loader-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: $bg-dark;
+  background: linear-gradient(135deg, $bg-dark 0%, darken($bg-dark, 3%) 100%);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 9999;
+  animation: fadeIn 0.3s ease-out;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 }
 
 .loader-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
+  gap: $spacing-xl;
 }
 
-// The Professional Spinner
 .spinner {
-  width: 48px;
-  height: 48px;
-  border: 3px solid $accent-muted;
+  width: 56px;
+  height: 56px;
+  border: 4px solid rgba(88, 166, 255, 0.2);
+  border-top-color: $accent-blue;
   border-radius: 50%;
   display: inline-block;
   position: relative;
   box-sizing: border-box;
-  animation: rotation 1s linear infinite;
+  animation: rotation 0.8s linear infinite;
 
   &::after {
     content: '';
     box-sizing: border-box;
     position: absolute;
-    left: 0;
+    left: 50%;
     top: 0;
-    background: $accent-white;
-    width: 12px;
-    height: 12px;
-    transform: translate(-50%, 50%);
+    width: 8px;
+    height: 8px;
+    background: $accent-blue;
+    transform: translateX(-50%);
     border-radius: 50%;
+    box-shadow: 0 0 12px $accent-blue;
   }
 }
 
 .brand-text {
   text-align: center;
+  animation: fadeInUp 0.5s ease-out 0.2s both;
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 
   .logo-icon {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: $spacing-md;
+    background: linear-gradient(135deg, $accent-blue, $accent-green);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     animation: pulse 2s ease-in-out infinite;
   }
 
   p {
-    color: #8b949e;
-    font-size: 0.9rem;
+    color: $text-secondary;
+    font-size: 0.95rem;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.03em;
     margin: 0;
   }
 }
@@ -73,6 +96,6 @@ $accent-muted: #30363d;
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.9); }
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
 }

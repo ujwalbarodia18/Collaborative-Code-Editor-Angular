@@ -1,9 +1,16 @@
+@import "../../common/styles/variables.scss";
+
 :host {
   display: block;
-  padding: 0.5rem;
+  height: 100%;
+  width: 100%;
+
   .editor-container {
     height: 100%;
-    border-radius: 0.5rem;
+    width: 100%;
+    border-radius: $radius-lg;
     overflow: hidden;
+    background-color: $bg-editor;
+    box-shadow: inset 0 0 0 1px $border-color;
   }
 }

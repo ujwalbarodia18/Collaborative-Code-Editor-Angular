@@ -11,6 +11,7 @@ import { Store } from '@ngxs/store';
 import { catchError, defer, distinctUntilChanged, filter, finalize, from, map, mergeMap, of, retryWhen, switchMap, tap, throwError } from 'rxjs';
 import { PrimaryLoaderComponent } from '../../ui-components/primary-loader-component/primary-loader.component';
 import { RoomPasswordComponent } from "../../ui-components/room-password/room-password-gate.component";
+import { ToasterService } from '../../common/services/toast.service';
 
 type RoomState = 'loading' | 'password' | 'ready' | 'error';
 @Component({
@@ -27,7 +28,8 @@ export class EditorRoomComponentComponent {
     private roomService: RoomService,
     private destroyRef: DestroyRef,
     private router: Router,
-    private store: Store
+    private store: Store,
+    private toast: ToasterService
   ) {}
 
   roomId: string = "";
@@ -128,8 +130,48 @@ export class EditorRoomComponentComponent {
         this.state = 'ready';
       },
       error: err => {
+        if (err.status === 400) {
+          this.router.navigate(['/']);
+          return;
+        }
         this.state = 'password';
       }
     });
+  }
+
+  copyRoomLink() {
+    const currentUrl = window.location.href;
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(currentUrl).then(() => {
+        this.toast.success('Room link copied to clipboard!', 'Share');
+      }).catch(() => {
+        this.fallbackCopyToClipboard(currentUrl);
+      });
+    } else {
+      this.fallbackCopyToClipboard(currentUrl);
+    }
+  }
+
+  private fallbackCopyToClipboard(text: string) {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed';
+    textArea.style.opacity = '0';
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+      const successful = document.execCommand('copy');
+      if (successful) {
+        this.toast.success('Room link copied to clipboard!', 'Share');
+      } else {
+        this.toast.error('Failed to copy link', 'Share');
+      }
+    } catch (err) {
+      this.toast.error('Failed to copy link', 'Share');
+    }
+
+    document.body.removeChild(textArea);
   }
 }

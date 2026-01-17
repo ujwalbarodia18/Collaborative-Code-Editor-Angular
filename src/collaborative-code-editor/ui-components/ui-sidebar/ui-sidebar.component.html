@@ -1,17 +1,15 @@
 <div class="sidebar-container">
-  <ui-button
-    label="New room"
-    [btnType]="'tertiary'"
-    [leadingIcon]="'assets/plus-file.svg'"
-    (btnClick)="openNewRoomDialog()"
-  />
+  <div class="btn-container">
+    <button class="room-tile btn-tertiary mb-1 d-flex align-items-center gap-2 w-100 fw-bold" (click)="openNewRoomDialog('host')">
+      <img class="svg" src="assets/plus-file.svg"/>
+      New room
+    </button>
+    <button class="room-tile btn-tertiary mb-1 d-flex align-items-center gap-2 w-100 fw-bold" (click)="openNewRoomDialog('join')">
+      <img class="svg" src="assets/room-join.svg"/>
+      Join room
+    </button>
+  </div>
 
-  <ui-button
-    label="Join room"
-    [btnType]="'tertiary'"
-    [leadingIcon]="'assets/room-join.svg'"
-    (btnClick)="openNewRoomDialog()"
-  />
 
   <div class="rooms-list-container mt-2">
     <div class="header">Recently visited</div>
@@ -27,28 +25,12 @@
           {{ room.name }}
         </a>
       }
-
-      <!-- <a href="#" class="room-tile btn-tertiary">
-        Vibe code
-      </a>
-      <a href="#" class="room-tile btn-tertiary">
-        Vibe code
-      </a>
-      <a href="#" class="room-tile btn-tertiary">
-        Vibe code
-      </a>
-      <a href="#" class="room-tile btn-tertiary">
-        Vibe code
-      </a> -->
-      <!-- <li>Hii</li>
-      <li>Hii</li>
-      <li>Hii</li> -->
     </div>
   </div>
 
-  @if (showNewRoomDialog) {
+  @if (showNewRoomDialog && formType) {
     <ui-dialog header="" (closeDialog)="closeNewRoomDialog()">
-      <app-room-form [formType]="'host'" (submitForm)="closeNewRoomDialog()" />
+      <app-room-form [formType]="formType" (submitForm)="closeNewRoomDialog()" />
     </ui-dialog>
   }
 </div>

@@ -2,18 +2,13 @@
   @case ('join') {
     <div class="form-title">Join a Room</div>
     <form [formGroup]="joinForm" class="d-flex flex-column gap-3">
-      <!-- <ui-text-input
-        [label]="'Display Name'"
-        [placeholder]="'Enter Name'"
-        formControlName="displayName"
-        [showError]="submitted"
-      ></ui-text-input> -->
-      <ui-text-input
-        [label]="'Room ID'"
-        placeholder="Enter Room Id"
+      <ui-dropdown
+        [label]="'Room'"
+        placeholder="Enter or select a room"
         formControlName="roomId"
+        [options]="recentlyVisitedRooms"
         [showError]="submitted"
-      ></ui-text-input>
+      ></ui-dropdown>
       <div class="submit-button-group mt-2">
         <ui-button
           [btnType]="'primary'"

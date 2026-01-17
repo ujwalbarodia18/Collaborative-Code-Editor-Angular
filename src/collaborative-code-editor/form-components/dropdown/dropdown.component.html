@@ -1,0 +1,38 @@
+<form-component-wrapper
+  [label]="label"
+  [required]="required"
+>
+  <div class="dropdown-wrapper" [class.disabled]="disabled">
+    <input
+      ngDefaultControl
+      type="text"
+      [value]="searchTerm"
+      [placeholder]="placeholder"
+      [disabled]="disabled"
+      (focus)="handleFocus()"
+      (input)="handleSearchInput($any($event.target).value)"
+      (blur)="handleBlur()"
+    />
+
+    <span class="dropdown-icon">
+      <img class="svg" [class]="{'rotate': isOpen}" src="assets/dropdown-arrow.svg" alt="" />
+    </span>
+
+    @if (isOpen && filteredOptions.length) {
+      <div class="options-panel">
+        @for (option of filteredOptions; track option.value) {
+          <button type="button" class="option" (click)="selectOption(option)">
+            {{ option.label }}
+          </button>
+        }
+      </div>
+    }
+  </div>
+
+  @if (showError && errorMessage && (showErrorWithoutTouched || ngControl?.control?.touched)) {
+    <div class="err-message mt-1">
+      <img class="svg" src="assets/error-cross-fill.svg" /> {{ errorMessage }}
+    </div>
+  }
+</form-component-wrapper>
+

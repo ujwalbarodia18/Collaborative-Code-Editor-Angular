@@ -8,10 +8,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { finalize, Observable } from 'rxjs';
 import { CustomValidators } from '../../../common/helpers/validators';
 import { ToastrService } from 'ngx-toastr';
+import { GoogleAuthButton } from '../google-auth-button/google-auth-button.component';
 
 @Component({
   selector: 'app-auth-page',
-  imports: [ReactiveFormsModule, TextInputComponent, UiButtonComponent],
+  imports: [ReactiveFormsModule, TextInputComponent, UiButtonComponent, GoogleAuthButton],
   templateUrl: './auth-page.component.html',
   styleUrl: './auth-page.component.scss',
 })

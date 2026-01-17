@@ -33,7 +33,8 @@ export const authInterceptor: HttpInterceptorFn = (
         router.navigate(['/auth']);
       }
       return throwError(() => ({
-        responseError: error?.error
+        responseError: error?.error,
+        status: error.status
       }));
     })
   );
