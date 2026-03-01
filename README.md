@@ -9,6 +9,8 @@ Frontend repo: https://github.com/ujwalbarodia18/Collaborative-Code-Editor-Angul
 Backend repo: https://github.com/ujwalbarodia18/Collaborative-Code-Editor-Server
 
 ---
+![Image](https://github.com/user-attachments/assets/9aa3a6d3-3448-4ee9-bfd1-657605caab65)
+---
 
 ## ✨ Features
 
