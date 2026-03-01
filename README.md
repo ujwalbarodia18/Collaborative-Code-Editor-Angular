@@ -1,59 +1,216 @@
-# Frontend
+# 🚀 Collaborative Code Editor
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.9.
+A real-time collaborative code editor that enables multiple users to join shared rooms and edit code simultaneously with live synchronization.
 
-## Development server
+Built using Angular, Node.js, Express, MongoDB, and WebSockets.
 
-To start a local development server, run:
+Frontend repo: https://github.com/ujwalbarodia18/Collaborative-Code-Editor-Angular
 
+Backend repo: https://github.com/ujwalbarodia18/Collaborative-Code-Editor-Server
+
+---
+
+## ✨ Features
+
+- 🔐 JWT-based authentication & authorization
+- 👥 Multi-user room support
+- ⚡ Real-time code synchronization using WebSockets
+- 🧠 Room-scoped event broadcasting
+- 🗄 Persistent room metadata stored in MongoDB
+- 🛡 Centralized error handling middleware
+- 🧱 Modular backend architecture
+- 🌐 CORS-configured and production-ready setup
+
+---
+
+## 🏗 System Architecture
+
+### High-Level Overview
+Client (Angular) ⟷ REST APIs ⟷ Node.js + Express Backend ⟷ MongoDB
+
+#### Real-time Layer:
+Client ⟷ WebSocket ⟷ Server ⟷ Room Broadcast
+
+
+
+## 🔄 Real-Time Synchronization Flow
+
+1. User authenticates via REST API.
+2. User joins a specific room.
+3. WebSocket connection is established.
+4. On code change:
+   - Client emits a `code-change` event.
+   - Server broadcasts the update to other users in the same room.
+5. All connected clients update their editor state.
+
+> Synchronization is room-scoped to ensure isolation between sessions.
+
+---
+
+## 🛠 Tech Stack
+
+### Frontend
+- Angular
+- RxJS
+- Angular Reactive Forms
+
+### Backend
+- Node.js
+- Express
+- WebSockets / Socket.io
+- MongoDB
+- Mongoose
+
+---
+
+## 📦 Installation
+
+### 1. Clone Repositories
+
+Backend:
 ```bash
+git clone https://github.com/<your-username>/server-repo.git
+cd server-repo
+```
+
+Frontend:
+```bash
+git clone https://github.com/<your-username>/client-repo.git
+cd client-repo
+```
+
+### 2. Backend Setup
+```bash
+npm install
+npm run dev
+```
+
+Create a .env file:
+```bash
+PORT=5000
+MONGO_URI=your_mongo_uri
+JWT_SECRET=your_secret
+```
+
+### 3. Frontend Setup
+```bash
+npm install --legacy-peer-deps
 ng serve
 ```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
+App will run at
 ```bash
-ng generate component component-name
+http://localhost:4200
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## 🔐 Environment Variables
 
-```bash
-ng generate --help
-```
+The backend requires the following environment variables.
 
-## Building
+Create a `.env` file in the root of the server project:
 
-To build the project run:
+PORT=5000  
+MONGO_URI=mongodb://localhost:27017/collab-editor  
+JWT_SECRET=your_super_secret_key  
+CLIENT_URL=http://localhost:4200  
+NODE_ENV=development  
 
-```bash
-ng build
-```
+---
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+### 📘 Variable Descriptions
 
-## Running unit tests
+| Variable      | Required | Description |
+|--------------|----------|------------|
+| PORT         | Yes      | Port on which the backend server runs. |
+| MONGO_URI    | Yes      | MongoDB connection string. |
+| JWT_SECRET   | Yes      | Secret key used to sign and verify JWT tokens. |
+| CLIENT_URL   | Yes      | Allowed frontend origin for CORS configuration. |
+| NODE_ENV     | No       | Application environment (`development` or `production`). |
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+---
 
-```bash
-ng test
-```
+### ⚠️ Security Notes
 
-## Running end-to-end tests
+- Do NOT commit the `.env` file to version control.
+- Always use a strong, unpredictable `JWT_SECRET` in production.
+- Configure different values for development and production environments.
 
-For end-to-end (e2e) testing, run:
+## ⚙️ Design Decisions
 
-```bash
-ng e2e
-```
+This project was designed with simplicity, modularity, and scalability in mind.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+---
 
-## Additional Resources
+### 1️⃣ WebSockets Over Polling
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+WebSockets were chosen instead of HTTP polling to:
+
+- Reduce latency for real-time updates
+- Minimize unnecessary network overhead
+- Enable bi-directional communication between client and server
+
+This allows instant code synchronization across connected users.
+
+---
+
+### 2️⃣ Room-Based Architecture
+
+Each collaborative session is isolated using socket rooms.
+
+Benefits:
+- Prevents cross-room event leakage
+- Keeps synchronization logic simple and maintainable
+
+---
+
+### 3️⃣ Separation of Concerns (Backend Structure)
+
+The backend follows a layered architecture:
+
+Routes → Controllers → Services → Database
+
+This ensures:
+- Clear responsibility boundaries
+- Easier testing and debugging
+- Better scalability as features grow
+
+---
+
+### 4️⃣ JWT-Based Authentication
+
+Stateless JWT authentication was used to:
+
+- Avoid server-side session storage
+- Enable horizontal scalability
+- Secure both REST APIs and socket connections
+
+---
+
+### 5️⃣ MongoDB for Flexible Schema
+
+MongoDB was selected because:
+
+- Room metadata can evolve over time
+- Flexible schema design supports rapid iteration
+- Works well with Node.js ecosystem
+
+---
+
+### 6️⃣ Environment-Based Configuration
+
+Environment variables are used for:
+
+- Database credentials
+- JWT secrets
+- CORS configuration
+
+This keeps sensitive information out of the codebase and supports multiple deployment environments.
+
+---
+
+### 7️⃣ Independent Frontend & Backend Deployment
+
+The system is designed so that:
+
+- Frontend and backend can be deployed independently
+- API base URLs are environment-driven
+- Infrastructure can scale separately if needed
