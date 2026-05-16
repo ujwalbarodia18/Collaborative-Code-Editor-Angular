@@ -31,7 +31,7 @@
     "@angular/router": "^20.3.0",
     "@ngxs/store": "^20.0.0",
     "bootstrap": "^5.3.8",
-    "monaco-editor": "^0.55.1",
+    "monaco-editor": "^0.52.2",
     "nanoid": "^5.1.6",
     "ngx-monaco-editor-v2": "^20.3.0",
     "ngx-toastr": "^19.1.0",
