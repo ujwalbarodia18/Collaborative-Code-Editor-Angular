@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://localhost:3000/',
-  websocketUrl: 'ws://localhost:3000/',
-  appName: 'MyAngularApp'
+  apiUrl: 'https://collaborative-code-editor-server.onrender.com/',
+  websocketUrl: 'wss://collaborative-code-editor-server.onrender.com/',
+  appName: 'Collaborative Code Editor'
 };
