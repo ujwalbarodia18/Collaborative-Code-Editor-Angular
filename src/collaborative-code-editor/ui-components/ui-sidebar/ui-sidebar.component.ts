@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { Store } from '@ngxs/store';
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { UiButtonComponent } from "../../form-components/ui-button/ui-button.component";
 import { RoomActions } from '../../data-collaborative-code-editor/states/room/room.action';
 import { UserService } from '../../data-collaborative-code-editor/services/user.service';
@@ -22,7 +22,7 @@ export class UiSidebarComponent {
   showNewRoomDialog: boolean = false;
   formType?: 'join' | 'host';
 
-  constructor(private store: Store, private us: UserService) {}
+  constructor(private store: Store, private us: UserService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     const user = this.us.getUser();
@@ -35,10 +35,12 @@ export class UiSidebarComponent {
   openNewRoomDialog(type: 'join' | 'host') {
     this.showNewRoomDialog = true;
     this.formType = type;
+    this.cdr.detectChanges();
   }
 
   closeNewRoomDialog() {
     this.showNewRoomDialog = false;
     this.formType = undefined;
+    this.cdr.detectChanges();
   }
 }
