@@ -57,4 +57,22 @@ export class AuthService {
     localStorage.removeItem(this.TOKEN_KEY);
     this.router.navigate(['/']);
   }
+
+  setRedirectUrl(url: string) {
+    sessionStorage.setItem('redirectUrl', url);
+  }
+
+  getRedirectUrl() {
+    return sessionStorage.getItem('redirectUrl');
+  }
+
+  clearRedirectUrl() {
+    sessionStorage.removeItem('redirectUrl');
+  }
+
+  redirectOnLogin() {
+    const redirectUrl = this.getRedirectUrl()
+    this.router.navigateByUrl(redirectUrl || '/editor');
+    this.clearRedirectUrl();
+  }
 }

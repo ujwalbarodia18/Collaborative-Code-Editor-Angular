@@ -25,7 +25,7 @@ export class GoogleAuthButton {
       callback: (res: any) => {
         this.auth.loginWithGoogle(res.credential)
         .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe(() => this.redirectToLandingPage())
+        .subscribe(() => this.auth.redirectOnLogin())
       }
     });
 
@@ -35,10 +35,6 @@ export class GoogleAuthButton {
       shape: 'rectangular',
       text: 'continue_with'
     });
-  }
-
-  redirectToLandingPage() {
-    this.router.navigate(['/editor']);
   }
 
   handleGoogleLogin() {

@@ -34,7 +34,7 @@ export class AuthComponent {
 
   ngOnInit() {
     if (this.authService.isLoggedIn()) {
-      this.redirectToLandingPage();
+      this.authService.redirectOnLogin();
       return;
     }
 
@@ -58,12 +58,10 @@ export class AuthComponent {
       finalize(() => (this.loading = false)),
       takeUntilDestroyed(this.destroyRef)
     )
-    .subscribe(() => this.redirectToLandingPage());
+    .subscribe(() => this.authService.redirectOnLogin());
   }
 
-  redirectToLandingPage() {
-    this.router.navigate(['/editor']);
-  }
+
 
   buildLoginForm() {
     this.form = this.fb.group({
